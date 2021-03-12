@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<!-- jQuery  -->
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+
+</head>
+<body>
+  <div class="iPhone-8---5">
+    <img src="img/Group 1.svg" class="Group-1">
+    <link rel="stylesheet" href="app.css">
+
+    <h2 id="title">Shift 웹서버 입니다!!</h2>
+    <input type="button" id="button1" onclick="myPage();" value="마이페이지" />
+    <input type="button" id="button2" onclick="googleLogout();" value="로그아웃" />
+    <br>
+    <input type="text" id="game_name"/>
+    <input type="button" id="button2" onclick="makeGame();" value="만들기" />
+
+    <ul>
+    </ul>
+
+  </div>
+
+<!-- The core Firebase JS SDK is always required and must be listed first -->
+<script src="https://www.gstatic.com/firebasejs/8.2.2/firebase-app.js"></script>
+
+<!-- TODO: Add SDKs for Firebase products that you want to use https://firebase.google.com/docs/web/setup#available-libraries -->
+<script src="https://www.gstatic.com/firebasejs/8.2.2/firebase-analytics.js"></script>
+
+<script src="https://www.gstatic.com/firebasejs/8.2.2/firebase-auth.js"></script>
+<script src="https://www.gstatic.com/firebasejs/8.2.2/firebase-firestore.js"></script>
+<script src="https://www.gstatic.com/firebasejs/8.2.2/firebase-database.js"></script>
+
+<script>
+var firebaseConfig = {
+    apiKey: "AIzaSyCXRTprV0yWYk8YrVpopvkFM4Cv_Nmhb2g",
+    authDomain: "shift-f80bc.firebaseapp.com",
+    databaseURL: "https://shift-f80bc-default-rtdb.firebaseio.com",
+    projectId: "shift-f80bc",
+    storageBucket: "shift-f80bc.appspot.com",
+    messagingSenderId: "111516463886",
+    appId: "1:111516463886:web:f7ae7d49add43d4cc0dd5f",
+    measurementId: "G-QXHD4RJNKQ"
+};
+
+// Initialize Firebase
+firebase.initializeApp(firebaseConfig);
+
+var db = firebase.firestore();
+
+var gameListRef = firebase.database().ref('gamePage/');
+gameListRef.on('value', (snapshot) => {
+  if(snapshot.exists()){
+    var node = document.createElement('li');
+    var a = document.createElement('a');
+    a.href = "/game_copy.html?id="+snapshot.key;
+    a.appendChild(document.createTextNode(snapshot.val().name+" (조회수: "+snapshot.val().view+")"));
+    node.appendChild(a);
+    document.querySelector('ul').appendChild(node);  
+  }
+});
+/*db.collection("game").get().then((querySnapshot) => {
+    querySnapshot.forEach((doc) => {
+        console.log(doc.id, " => ", doc.data());
+        var query = db.collection("view").where("page","==",doc.id);
+        query.get()
+        .then(function(querySnapshot) {
+            flag = true;
+            var node = document.createElement('li');
+            var a = document.createElement('a');
+            a.href = "/game.html?id="+doc.id;
+            querySnapshot.forEach(function(doc1) {
+                // doc.data() is never undefined for query doc snapshots
+                console.log(doc1.id, " => ", doc1.data());
+                var num = doc1.get("num")
+                a.appendChild(document.createTextNode(doc.get("name")+" (조회수: "+num+")"));
+                flag = false;
+            });
+            if(flag){
+              a.appendChild(document.createTextNode(doc.get("name")+" (조회수: 0)"));
+            }
+            node.appendChild(a);
+            document.querySelector('ul').appendChild(node);  
+        })
+        .catch(function(error) {
+            console.log("Error getting documents: ", error);
+        });
+    });
+});*/
+
+
+var userId;
+
+firebase.auth().onAuthStateChanged(function(user) {
+  console.log(user);
+    if (user) {
+    // User is signed in.
+    var name, email, photoUrl, uid, emailVerified;
+    name = user.displayName;
+    email = user.email;
+    photoUrl = user.photoURL;
+    emailVerified = user.emailVerified;
+    uid = user.uid;  // The user's ID, unique to the Firebase project. Do NOT use
+                    // this value to authenticate with your backend server, if
+                    // you have one. Use User.getToken() instead.
+    console.log(name)
+    console.log(email)
+    console.log(photoUrl)
+    console.log(emailVerified)
+    console.log(uid)
+    userId = uid;
+    //alert(user.displayName+"님, 안녕하세요!")		// 인증 후 어떤 데이터를 받아오는지 확인해보기 위함. 
+    document.getElementById("title").textContent = user.displayName+"님, 안녕하세요!";
+  }
+  else{
+    alert("로그인 페이지로 이동");
+    window.location.href = "login.html";
+  }
+});
+
+
+function googleLogout() {
+  firebase.auth().signOut().then(function() {
+    alert("로그아웃 성공");
+  // Sign-out successful.
+  }).catch(function(error) {
+    alert("에러");
+  // An error happened.
+  });
+}
+
+
+function myPage() {
+  var user = firebase.auth().currentUser;
+  var href = "user-page.html?id="+user.uid;
+  window.location.href = href;
+}
+
+function makeGame() {
+  var user = firebase.auth().currentUser;
+  var db = firebase.firestore();
+  var gameName = document.getElementById('game_name').value;
+
+  var docRef = db.collection("game").doc(gameName);
+  docRef.get().then(function(doc) {
+      if (doc.exists) {
+          alert("같은 이름의 게임이 이미 존재합니다");
+          console.log("Document data:", doc.data());
+      } 
+      else {
+          alert(userId+" / "+gameName+"추가");
+          db.collection("game").add({
+            uid: userId,
+            company: "A",
+            genre: "B",
+            name: gameName,
+            playtime : "10:00"
+          })
+          .then(function(docRef) {
+              alert(gameName+" 게임 생성");
+              console.log("Document written with ID: ", docRef.id);
+              var node = document.createElement('li');
+              var a = document.createElement('a');
+              a.href = "/game.html?id="+docRef.id;
+              a.appendChild(document.createTextNode(gameName+" (조회수: 0)"));
+              node.appendChild(a);
+              document.querySelector('ul').appendChild(node);  
+
+              var gamePageRef = firebase.database().ref('gamePage/'+docRef.id);
+              gamePageRef.set({
+                  name: gameName,
+                  number: 30, 
+                  view: 0
+              }).then(success => {
+                      console.log('success',success);},
+                  error => {
+                      console.log('error',error);}
+              );
+          })
+          .catch(function(error) {
+              console.error("Error adding document: ", error);
+          });
+      }
+  }).catch(function(error) {
+      console.log("Error getting document:", error);
+  });
+}
+
+</script>
+</body>
+</html>
