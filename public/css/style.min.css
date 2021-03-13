@@ -13,3 +13,33 @@
   }
   
 }
+.invisible {
+	display: none;
+  }
+  .list-setting{
+	padding: 0px;
+	
+  }
+  .list-title{
+	background-color: #F4F4F4;
+	color: #999999;
+	padding: 10px;
+	border-top: 1px solid #999999;
+	border-bottom: 1px solid #999999;
+  }
+  .list-content{
+	
+	text-align: center!important;
+	padding: 10px;
+	color: #454545;
+	font-weight: 500;
+	border-bottom: 1px solid #ced4da;
+	height: 3rem;
+  }
+  .mypage-active{
+	color: #17375E;
+	font-weight: 700;
+  }
+  .font-12{
+	font-size: 12px!important;
+  }
