@@ -68,37 +68,57 @@
   <!-- Navbar -->   
 
   <!--Main layout-->
-  <main class="mt-4 pt-4" style="min-height: 100%; align-items: center;">
+  <main class="mt-4 pt-4" style="min-height: 100vh; align-items: center;">
     <div class="container mt-5" style="">
 
       <!--Section: Post-->
-      <section class="mt-0">
+      
 
         <!--Grid row-->
-        <div class="row justify-content-center align-middle">
+        <div class="row justify-content-center align-middle" style="padding-top: 5vh;">
             
           <!--Grid column-->
           <div class=" col-xl-4 col-lg-6 col-md-10 col-sm-12 col-xs-12 mb-4">
-              <div  class="text-center" style="">
-                <p class="font-weight-bold mb-5 mt-5 h4" style="color: #872434;">계정 생성</p>
-                <div style="padding: 20px 20px;">
-                  <p class="font-weight-bold text-left">본인확인을 진행해주세요<br>
-                    <span style="color: #872434;">반드시 korea.ac.kr로 끝나는 학교이메일이어야 합니다!</span></p> 
-                  <div class="form-group text-left font-weight-bold">
-                    <label for="usr">이메일(본인인증용)</label>
-                    <input type="email" class="form-control" id="userEmail" placeholder="ENTER YOUR EMAIL">
-                  </div>
-
+            <div style="padding: 20px">
+                <img src="img\kable\KUee_logo.png" alt="" style="width: 80%;">
+                <p class="font-weight-bold mt-3 h4" style="color:  #872434;">전기전자공학부 애기능 학생회관<br> 과방 이용 신청</p>
                 
-                <div style="height: 15px;"></div>
-                    <a type="button" class="btn btn-block text-white font-weight-bold" 
+                  <div class="form-group text-left font-weight-bold mt-5">
+                    <label for="email">이메일</label>
+                    <input type="email" class="form-control" id="userEmail" placeholder="이메일">
+                </div>
+                    
+                <div class="form-group text-left font-weight-bold">
+                    <label for="pwd">비밀번호</label>
+                    <input type="password" class="form-control" id="userPassword" placeholder="비밀번호" onchange="checkPassword();" autocomplete="off">
+                </div>
+               
+                
+                
+                
+                
+                    <a type="button" class="btn btn-block text-white font-weight-bold mt-3" 
                     style="
                     background-color: #872434;
                     border-radius: 1rem;
                     font-size: 20px;
                     text-transform: capitalize;
-                    " onclick="signUpEmail();">인증메일 보내기</a>
-                    <div class="" style="height: 20px;"></div>
+                    " onclick="signUp();">로그인</a>
+                    
+                    <a type="button" class="btn btn-block font-weight-bold mt-3" 
+                    style="
+                    border: 2px solid #872434;
+                    color: #872434;
+                    border-radius: 1rem;
+                    font-size: 20px;
+                    " href="make_account.html">회원가입</a>
+                    <div class="text-center mt-3">
+                        <a class="mt-5" style="
+                    color: #999999;
+                    font-size: 15px;
+                    " href="find_account_password.html">비밀번호를 잊으셨나요? ></a>
+                    </div>
+                    
                     
                 </div>
                     
@@ -109,8 +129,7 @@
             
         </div> 
 
-      </section>
-      <!--Section: Post-->
+      
 
     </div>
   </main>
@@ -209,7 +228,117 @@ if (firebase.auth().isSignInWithEmailLink(window.location.href)) {
   });*/
 }
 
+function checkId(){
+  var db = firebase.firestore();
+  var name = document.getElementById('userID').value;
+  var query = db.collection("user").where("name","==",name);
+  idVerified = true;
+  query.get()
+  .then(function(querySnapshot) {
+      querySnapshot.forEach(function(doc) {
+          // doc.data() is never undefined for query doc snapshots
+          console.log(doc.id, " => ", doc.data());
+          alert("id "+ doc.get("name")+" already exists!");
+          idVerified = false;
+          document.getElementById('checkId').textContent = "중복확인"
+          document.getElementById('userID').value = "";
+      });
+      if(idVerified){
+        alert("id "+ name+" is available!");
+        document.getElementById('checkId').textContent = "확인완료";
+      }   
+  })
+  .catch(function(error) {
+      console.log("Error getting documents: ", error);
+  });
+}
 
+function checkPassword(){
+  var pw1 = document.getElementById('userPassword').value;
+  var pw2 = document.getElementById('userPassword2').value;
+  if(document.getElementById('userPassword').value.length > 0 && document.getElementById('userPassword').value.length < 6){
+    document.getElementById("check").textContent = "비밀번호는 6자 이상으로 설정해주세요"   
+    document.getElementById('check').style.color='green';
+    pwVerified = false;
+  }
+  else{  
+    if(pw1 == pw2){
+      document.getElementById("check").textContent = "비밀번호가 일치합니다"
+      document.getElementById('check').style.color='blue';
+      pwVerified = true;
+    }
+    else{
+      document.getElementById('check').innerHTML='비밀번호가 일치하지 않습니다'
+      document.getElementById('check').style.color='red';
+      pwVerified = false;
+    }
+  }
+}
+
+function signUp(){
+  flag = true;
+  if(idVerified == false){
+    flag = false;
+    alert("아이디 중복확인을 완료해주세요");
+  }
+  if(pwVerified == false){
+    flag = false;
+    alert("비밀번호 확인을 완료해주세요");
+  }
+  if(emailVerified == false){
+    flag = false;
+    alert("이메일 인증을 완료해주세요");
+  }
+  if(flag){
+    alert("회원가입 클릭");
+    var email = document.getElementById('userEmail').value;
+    var password = document.getElementById('userPassword').value;
+    var name = document.getElementById('userID').value;
+    if(!name || !password){
+      alert("회원가입 정보를 적어주세요");
+    }
+    else{
+      firebase.auth().createUserWithEmailAndPassword(email, password)
+      .then((user) => {
+        var db = firebase.firestore();
+        var name = document.getElementById('userID').value;
+        //alert("회원가입 시작 "+name+"/"+email+"/"+password);
+        var user1 = firebase.auth().currentUser;
+        user1.updateProfile({
+          displayName: name
+        }).then(function() {
+          alert(user1.displayName+"님 회원가입 완료");
+          window.location.href = "loginpage.html";
+          // Update successful.
+        }).catch(function(error) {
+          // An error happened.
+          //alert("이름 설정 에러");
+          console.log(errorCode);
+          console.log(errorMessage);
+        });
+        window.localStorage.removeItem('emailForSignIn');
+        /*db.collection("user").add({
+            name: name,
+            email: email,
+            emailVerified: true,
+            uid: "",
+            account:"",
+        })
+        .then(function(docRef) {
+            docRef.update({uid : docRef.id})
+            console.log("Document written with ID: ", docRef.id);
+        })
+        .catch(function(error) {
+            console.error("Error adding document: ", error);
+            alert(error.code+" / "+error.message);
+        });*/
+      })
+      .catch((error) => {
+        alert("회원가입 에러 "+error.code+"/"+error.message);
+      });
+    }
+  }
+}
 </script>
 </body>
 
