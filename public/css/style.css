@@ -343,12 +343,14 @@ body,
 .list-setting{
   padding: 0px;
    border-top: 1px solid #999999;
+  height: 4rem;
 }
 .list-title{
   background-color: #F4F4F4;
   color: #999999;
   padding: 10px;
   border-bottom: 1px solid #999999;
+  height: 4rem;
 }
 .list-content{
   text-align: center!important;
