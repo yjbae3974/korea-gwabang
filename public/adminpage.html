@@ -39,7 +39,15 @@
             color: #B1B1B1;
  }
 }
-
+th{
+  background-color: #c2c2c2;
+  border: 1px solid #999999;
+  text-align: center;
+}
+td{
+  border: 1px solid #999999;
+  text-align: center;
+}
   </style>
   
 </head>
@@ -90,105 +98,92 @@
         <div class="row justify-content-center align-middle" style="padding-top: 5vh;">
             
           <!--Grid column-->
-          <div class=" col-xl-4 col-lg-6 col-md-10 col-sm-12 col-xs-12 mb-4">
+          <div class=" col-xl-8 col-lg-6 col-md-10 col-sm-12 col-xs-12 mb-4">
             <div style="padding: 20px">
-                <img src="img\kable\KUee_logo.png" alt="" style="width: 80%;">
+                <p class="h3">admin page</p>
+                <img class="mt-3" src="img\kable\KUee_logo.png" alt="" style="width: 80%; max-width: 400px;">
                 <p class="font-weight-bold mt-3 h4" style="color:  #872434;line-height: 1.5;">
                   전기전자공학부 애기능 학생회관<br> 과방 이용 신청</p>
-                
-                <ul class="nav nav-tabs mb-3" id="ex1" role="tablist" style="border-bottom: 1px solid #B1B1B1;">
-                    <li class="nav-item" role="presentation" style="width: 50%;">
-                      <a
-                        class="nav-link active text-center"
-                        id="ex1-tab-1"
-                        data-toggle="tab"
-                        data-mdb-toggle="tab"
-                        href="#ex1-tabs-1"
-                        role="tab"
-                        aria-controls="ex1-tabs-1"
-                        aria-selected="true"
-                        style="font-size: 16px; font-weight: 900;"
-                        >이용 현황</a
-                      >
-                    </li>
-                    <li class="nav-item" role="presentation" style="width: 50%;">
-                      <a
-                        class="nav-link text-center"
-                        id="ex1-tab-2"
-                        data-mdb-toggle="tab"
-                        data-toggle="tab"
-                        href="#ex1-tabs-2"
-                        role="tab"
-                        aria-controls="ex1-tabs-2"
-                        aria-selected="false"
-                        style="font-size: 16px; font-weight: 900;"
-                        >이용 신청</a
-                      >
-                    </li>
-                  </ul>
-                  <!-- Tabs navs -->
                   
-                  <!-- Tabs content -->
-                  <div class="tab-content" id="ex1-content">
-                    <div
-                      class="tab-pane fade show active"
-                      id="ex1-tabs-1"
-                      role="tabpanel"
-                      aria-labelledby="ex1-tab-1"
-                    >
-                    <div class="container">
+                
+                    
                         <div class="font-weight-bold" style="">현재 수용인원: <span>{0}</span>명</div>
                         <div class="font-weight-bold" style="">최대 수용인원: <span>4</span>명</div>
-                        <table>
-                            <tr></tr>
-                            <tr></tr>
-                            <tr></tr>
-                            <tr></tr>
-                            <tr></tr>
-                            <tr></tr>
-                            <tr></tr>
+                        <table class="mt-3" style="margin-left: -10px;">
+                            <tr>
+                                <th>이름</th>
+                                <th>전화번호</th>
+                                <th>이메일</th>
+                                <th>학번</th>
+                                <th>이용시작시각</th>
+                                <th>이용예정시간</th>
+                                <th>이용사유</th>
+                            </tr>
+                            <tr>
+                                <td>김광호</td>
+                                <td>010-1111-1111</td>
+                                <td>criss1004@korea.ac.kr</td>
+                                <td>2020171001</td>
+                                <td>2021.03.34 18:34:34</td>
+                                <td>6시간</td>
+                                <td>종교와 영화</td>
+                            </tr>
+                            <tr>
+                                <td>김광호</td>
+                                <td>010-1111-1111</td>
+                                <td>criss1004@korea.ac.kr</td>
+                                <td>2020171001</td>
+                                <td>2021.03.34 18:34:34</td>
+                                <td>6시간</td>
+                                <td>종교와 영화</td>
+                            </tr>
+                            <tr>
+                                <td>김광호</td>
+                                <td>010-1111-1111</td>
+                                <td>criss1004@korea.ac.kr</td>
+                                <td>2020171001</td>
+                                <td>2021.03.34 18:34:34</td>
+                                <td>6시간</td>
+                                <td>종교와 영화</td>
+                            </tr>
+                            <tr>
+                                <td>김광호</td>
+                                <td>010-1111-1111</td>
+                                <td>criss1004@korea.ac.kr</td>
+                                <td>2020171001</td>
+                                <td>2021.03.34 18:34:34</td>
+                                <td>6시간</td>
+                                <td>종교와 영화</td>
+                            </tr>
                         </table>
-                        </div>
+                        
                     </div>
                     
-                    <!--tab1-->
-                    <div class="tab-pane fade" id="ex1-tabs-2" role="tabpanel" aria-labelledby="ex1-tab-2">
-                        <div class="form-group text-left font-weight-bold mt-5">
-                            <label for="">과방 이용 시간</label>
-                            <input type="" class="form-control" id="usingTime" placeholder="이용 예정 시간을 입력하세요">
-                        </div>
-                        <div class="form-group text-left font-weight-bold mt-5">
-                            <label for="">이용 사유</label>
-                            <input type="" class="form-control" id="usingTime" placeholder="이용 사유를 입력하세요">
-                        </div>
-            
-                        <a type="button" class="btn text-white font-weight-bold mt-5" href="" style="background-color: #872434; font-size: 16px; margin-left: 0;">신청하기</a>       
+                   
+                    <div class="container d-flex justify-content-end" style="margin-top: 10vh;">
+                        <a type="button" class="btn  font-weight-bold mt-3" 
+                        style="
+                        border: 2px solid #872434;
+                        color: #872434;
+                        border-radius: 1rem;
+                        font-size: 16px;
+                        " href="">로그아웃</a>
                     </div>
                     </div>
                    
-                  <!-- Tabs content -->
+                 
                     
                     
-                </div>
-                <div class="container d-flex justify-content-end" style="margin-top: 10vh;">
-                    <a type="button" class="btn  font-weight-bold mt-3" 
-                    style="
-                    border: 2px solid #872434;
-                    color: #872434;
-                    border-radius: 1rem;
-                    font-size: 16px;
-                    " href="">로그아웃</a>
-                </div>  
+                
+                  
                
                 </div>
               </div>
-            </div>
             
-        </div> 
 
       
 
-    </div>
+    
   </main>
   <!--Main layout-->
 
