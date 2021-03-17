@@ -109,7 +109,7 @@ td{
                     
                         <div class="font-weight-bold" style="">현재 수용인원: <span>{0}</span>명</div>
                         <div class="font-weight-bold" style="">최대 수용인원: <span>4</span>명</div>
-                        <table class="mt-3" style="margin-left: -10px;">
+                        <!--<table class="mt-3" style="margin-left: -10px;">
                             <tr>
                                 <th>이름</th>
                                 <th>전화번호</th>
@@ -128,35 +128,34 @@ td{
                                 <td>6시간</td>
                                 <td>종교와 영화</td>
                             </tr>
-                            <tr>
-                                <td>김광호</td>
-                                <td>010-1111-1111</td>
-                                <td>criss1004@korea.ac.kr</td>
-                                <td>2020171001</td>
-                                <td>2021.03.34 18:34:34</td>
-                                <td>6시간</td>
-                                <td>종교와 영화</td>
-                            </tr>
-                            <tr>
-                                <td>김광호</td>
-                                <td>010-1111-1111</td>
-                                <td>criss1004@korea.ac.kr</td>
-                                <td>2020171001</td>
-                                <td>2021.03.34 18:34:34</td>
-                                <td>6시간</td>
-                                <td>종교와 영화</td>
-                            </tr>
-                            <tr>
-                                <td>김광호</td>
-                                <td>010-1111-1111</td>
-                                <td>criss1004@korea.ac.kr</td>
-                                <td>2020171001</td>
-                                <td>2021.03.34 18:34:34</td>
-                                <td>6시간</td>
-                                <td>종교와 영화</td>
-                            </tr>
-                        </table>
+                            <span id="content-placeholder"></span>
+                        </table>-->
                         
+                        <!--여기 이런 식으로 각 컴포넌트당 하나씩 데이터 추가해주면 될듯 list-content넣고-->
+                        <div class="row" style="font-size: 14px;">
+                          <div class="col-2 list-setting">
+                              <div class="text-center list-title">이름</div>
+                            </div>
+                            <div class="col-2 list-setting">
+                              <div class="text-center list-title">전화번호</div>
+                            </div>
+                            <div class="col-4 list-setting">
+                              <div class="text-center list-title">이메일</div>
+                            </div>
+                            <div class="col-2 list-setting">
+                              <div class="text-center list-title">학번</div>
+                            </div>
+                            <div class="col-2 list-setting">
+                              <div class="text-center list-title">이용시간</div>
+                            </div>
+                            <div class="col-2 list-setting">
+                              <div class="text-center list-title">이용사유</div>
+                            </div>
+                        </div>
+
+                        <!--Content start-->
+                        <div id="content-placeholder" class="mb-5"></div>
+                        <!--Content end-->
                     </div>
                     
                    
@@ -170,13 +169,7 @@ td{
                         " href="">로그아웃</a>
                     </div>
                     </div>
-                   
-                 
-                    
-                    
-                
-                  
-               
+              
                 </div>
               </div>
             
@@ -199,6 +192,32 @@ td{
     <div style="height: 3px;"></div>
   </footer>
   <!--/.Footer-->
+
+  <script id="some-template" type="text/x-handlebars-template">
+    {{#contents}}
+    <div class="row" style="font-size: 14px;">
+        <div class="col-2 list-setting">
+          <div class="text-center list-content">{{name}}</div>
+        </div>
+        <div class="col-2 list-setting">
+          <div class="text-center list-content">{{contact}}</div>
+        </div>
+        <div class="col-4 list-setting">
+          <div class="text-center list-content">{{email}}</div>
+        </div>
+        <div class="col-2 list-setting">
+          <div class="text-center list-content">{{id}}</div>
+        </div>
+        <div class="col-2 list-setting">
+          <div class="text-center list-content">{{start}} ~ {{end}}</div>
+        </div>
+        <div class="col-2 list-setting">
+          <div class="text-center list-content">{{purpose}}</div>
+        </div>
+    </div>
+    {{/contents}}
+  </script>
+
 
   <!-- SCRIPTS -->
   <!-- JQuery -->
@@ -226,61 +245,129 @@ td{
 <script src="https://www.gstatic.com/firebasejs/8.2.2/firebase-auth.js"></script>
 <script src="https://www.gstatic.com/firebasejs/8.2.2/firebase-firestore.js"></script>
 <script src="https://www.gstatic.com/firebasejs/8.2.2/firebase-database.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/handlebars.js/4.7.6/handlebars.min.js" integrity="sha512-zT3zHcFYbQwjHdKjCu6OMmETx8fJA9S7E6W7kBeFxultf75OPTYUJigEKX58qgyQMi1m1EgenfjMXlRZG8BXaw==" crossorigin="anonymous"></script>
 
 <script>
 var firebaseConfig = {
-    apiKey: "AIzaSyCXRTprV0yWYk8YrVpopvkFM4Cv_Nmhb2g",
-    authDomain: "shift-f80bc.firebaseapp.com",
-    databaseURL: "https://shift-f80bc-default-rtdb.firebaseio.com",
-    projectId: "shift-f80bc",
-    storageBucket: "shift-f80bc.appspot.com",
-    messagingSenderId: "111516463886",
-    appId: "1:111516463886:web:f7ae7d49add43d4cc0dd5f",
-    measurementId: "G-QXHD4RJNKQ"
-};
-
+    apiKey: "AIzaSyAnCGQzZWMcsci2ob13jqW1-gf8Sk-_7aU",
+    authDomain: "reserve-gwabang.firebaseapp.com",
+    databaseURL: "https://reserve-gwabang-default-rtdb.firebaseio.com",
+    projectId: "reserve-gwabang",
+    storageBucket: "reserve-gwabang.appspot.com",
+    messagingSenderId: "872525073842",
+    appId: "1:872525073842:web:2859549ab4a9ff36cfe8ab",
+    measurementId: "G-QNC7XQHCLB"
+  };
+  
 // Initialize Firebase
 firebase.initializeApp(firebaseConfig);
-var emailVerified = false;
-var pwVerified = false;
-var idVerified = false;
-var email;
 
-// Confirm the link is a sign-in with email link.
-if (firebase.auth().isSignInWithEmailLink(window.location.href)) {
-  // Additional state parameters can also be passed via URL.
-  // This can be used to continue the user's intended action before triggering
-  // the sign-in operation.
-  // Get the email if available. This should be available if the user completes
-  // the flow on the same device where they started it.
-  email = window.localStorage.getItem('emailForSignIn');
-  if (!email) {
-    // User opened the link on a different device. To prevent session fixation
-    // attacks, ask the user to provide the associated email again. For example:
-    email = window.prompt('Please provide your email for confirmation');
-  }
-  alert("이메일 링크 로그인 " + email);
-  document.getElementById("userEmail").value = email;
-  emailVerified = true;
-  /*firebase.auth().signInWithEmailLink(email, window.location.href)
-  .then((result) => {
-    // Clear email from storage.
-    window.localStorage.removeItem('emailForSignIn');
-    // You can access the new user via result.user
-    // Additional user info profile not available via:
-    // result.additionalUserInfo.profile == null
-    // You can check if the user is new or existing:
-    // result.additionalUserInfo.isNewUser
-  })
-  .catch((error) => {
-    console.log(error.code);
-    console.log(error.message);
-    // Some error occurred, you can inspect the code: error.code
-    // Common errors could be invalid email and invalid or expired OTPs.
-  });*/
-}
+var userId;
+var userEmail;
+
+firebase.auth().onAuthStateChanged(function(user) {
+    if (user) {
+      // User is signed in.
+      //console.log(user)      // 인증 후 어떤 데이터를 받아오는지 확인해보기 위함.
+      var db = firebase.firestore();
+      var flag = true;
+      userEmail = user.email;
+      var docRef = db.collection("user").doc(user.uid);
+      docRef.get().then(function(doc) {
+        if (doc.exists) {
+            //alert(user.displayName+"님 안녕하세요");
+            userId = doc.id;
+            console.log("Document data:", doc.data());
+        } 
+        else {
+           alert("로그인을 완료해주세요");
+           window.location.href = "loginpage.html";
+        }
+      }).catch(function(error) {
+          console.log("Error getting document:", error);
+      });
+    } else {
+      // No user is signed in.
+      alert("로그인 X");
+      //console.log(user)      // 인증 후 어떤 데이터를 받아오는지 확인해보기 위함.
+    }
+});
 
 
+      /*<td>{{name}}</td>
+        <td>{{contack}}</td>
+        <td>{{email}}</td>
+        <td>{{id}}</td>
+        <td>{{start}}</td>
+        <td>{{end}}</td>
+        <td>{{prupose}}</td>*/
+
+// 템플릿 해석
+var source   = $("#some-template").html();
+var template = Handlebars.compile(source);
+
+var db = firebase.firestore();
+var data = new Object();
+var dataArray = new Array();
+
+var db = firebase.firestore();
+db.collection("reservation").get().then(function(querySnapshot) {
+    querySnapshot.forEach(function(doc) {
+        console.log(doc.id, " => ", doc.data());
+        var id = doc.get("id");
+        var start = doc.get("start");
+        var end = doc.get("end");
+        var purpose = doc.get("purpose");
+
+        db.collection("user").doc(id).get().then(function(doc1) {
+            console.log(doc1.id, " => ", doc1.data());
+            var temp = new Object();
+            temp.name = doc1.get("name");
+            temp.contact = doc1.get("contact");
+            temp.email = doc1.get("email");
+            temp.id = doc1.get("id");
+            temp.start = start;
+            temp.end = end;
+            temp.purpose = purpose;
+            dataArray.push(temp);
+
+            data.contents = dataArray;
+            // div id=content-placeholder 에 결과 내역을 렌더링한다 
+            $("#content-placeholder").html(template(data));
+        }).catch(function(error) {
+            console.log("Error getting document:", error);
+        });
+    });
+})
+.catch(function(error) {
+    console.log("Error getting documents: ", error);
+});
+
+
+/*
+        var stt = new Date(doc.get("start"));
+        var endt = new Date(doc.get("end"));
+        var curt = new Date();
+
+        if(stt<= curt && curt<=endt){
+          var temp = new Object();
+          temp.start = doc.get("start");
+          temp.end = doc.get("end");
+          temp.purpose = doc.get("purpose");
+          temp.id = doc.get("id");
+          dataArray.push(temp);
+
+          data.contents = dataArray;
+          // div id=content-placeholder 에 결과 내역을 렌더링한다 
+          $("#content-placeholder").html(template(data));
+          var num = document.getElementById('userNum').textContent*1 + 1;
+          var max = document.getElementById('maxNum').textContent*1;
+          document.getElementById('userNum').textContent = num;
+          if(num>=4){
+            document.getElementById('submitBtn').textContent="신청불가";
+          }
+        }
+*/
 </script>
 </body>
 
