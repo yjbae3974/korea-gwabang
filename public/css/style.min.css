@@ -44,3 +44,4 @@
   .font-12{
 	font-size: 12px!important;
   }
+  input[type=submit] {-webkit-appearance:none;}
