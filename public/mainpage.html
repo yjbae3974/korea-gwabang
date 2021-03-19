@@ -232,10 +232,15 @@
                     
                     <!--tab1-->
                     <div class="tab-pane fade" id="ex1-tabs-2" role="tabpanel" aria-labelledby="ex1-tab-2">
-                        <div class="form-group text-left font-weight-bold mt-5">
-                            <label for="">과방 이용 시간</label>
-                            <input type="" class="form-control" id="usingTime" placeholder="이용 예정 시간을 입력하세요">
-                        </div>
+                      <form action="/action_page.php">
+                        <label class="font-weight-bold" for="appt">이용 시작 시각:</label>
+                        <input class="form-control" type="time" id="appt" name="appt">
+                      </form>
+                      <form class="mt-3" action="/action_page.php">
+                        <label class="font-weight-bold" for="appt">이용 완료 시각:</label>
+                        <input class="form-control" type="time" id="appt" name="appt">
+                      </form>
+                        
                         <div class="form-group text-left font-weight-bold mt-5">
                             <label for="">이용 사유</label>
                             <input type="" class="form-control" id="usingTime" placeholder="이용 사유를 입력하세요">
@@ -257,6 +262,9 @@
                     border-radius: 1rem;
                     font-size: 16px;
                     " href="">로그아웃</a>
+                </div>
+                <div class="text-center font-weight-bold mt-3" style="color: #872434;line-height: 2rem;">
+                  반드시 이용안내 페이지를 충분히 숙지하신 후, 이용해주시기 바랍니다!
                 </div>  
                
                 </div>
