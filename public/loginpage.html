@@ -188,167 +188,61 @@
 
 <script>
 var firebaseConfig = {
-    apiKey: "AIzaSyCXRTprV0yWYk8YrVpopvkFM4Cv_Nmhb2g",
-    authDomain: "shift-f80bc.firebaseapp.com",
-    databaseURL: "https://shift-f80bc-default-rtdb.firebaseio.com",
-    projectId: "shift-f80bc",
-    storageBucket: "shift-f80bc.appspot.com",
-    messagingSenderId: "111516463886",
-    appId: "1:111516463886:web:f7ae7d49add43d4cc0dd5f",
-    measurementId: "G-QXHD4RJNKQ"
-};
+    apiKey: "AIzaSyAnCGQzZWMcsci2ob13jqW1-gf8Sk-_7aU",
+    authDomain: "reserve-gwabang.firebaseapp.com",
+    databaseURL: "https://reserve-gwabang-default-rtdb.firebaseio.com",
+    projectId: "reserve-gwabang",
+    storageBucket: "reserve-gwabang.appspot.com",
+    messagingSenderId: "872525073842",
+    appId: "1:872525073842:web:2859549ab4a9ff36cfe8ab",
+    measurementId: "G-QNC7XQHCLB"
+  };
 
 // Initialize Firebase
 firebase.initializeApp(firebaseConfig);
-var emailVerified = false;
-var pwVerified = false;
-var idVerified = false;
-var email;
 
-// Confirm the link is a sign-in with email link.
-if (firebase.auth().isSignInWithEmailLink(window.location.href)) {
-  // Additional state parameters can also be passed via URL.
-  // This can be used to continue the user's intended action before triggering
-  // the sign-in operation.
-  // Get the email if available. This should be available if the user completes
-  // the flow on the same device where they started it.
-  email = window.localStorage.getItem('emailForSignIn');
-  if (!email) {
-    // User opened the link on a different device. To prevent session fixation
-    // attacks, ask the user to provide the associated email again. For example:
-    email = window.prompt('Please provide your email for confirmation');
-  }
-  alert("이메일 링크 로그인 " + email);
-  document.getElementById("userEmail").value = email;
-  emailVerified = true;
-  /*firebase.auth().signInWithEmailLink(email, window.location.href)
-  .then((result) => {
-    // Clear email from storage.
-    window.localStorage.removeItem('emailForSignIn');
-    // You can access the new user via result.user
-    // Additional user info profile not available via:
-    // result.additionalUserInfo.profile == null
-    // You can check if the user is new or existing:
-    // result.additionalUserInfo.isNewUser
+firebase.auth().onAuthStateChanged(function(user) {
+    if (user) {
+      // User is signed in.
+      alert(user.displayName+"님 안녕하세요");
+      //console.log(user)		// 인증 후 어떤 데이터를 받아오는지 확인해보기 위함.
+      var db = firebase.firestore();
+      var flag = true;
+      var docRef = db.collection("user").doc(user.uid);
+      docRef.get().then(function(doc) {
+        if (doc.exists) {
+            console.log("Document data:", doc.data()); 
+            window.location.href = "mainpage.html";
+        } 
+        else {
+           alert("로그인을 완료해주세요");
+        }
+      }).catch(function(error) {
+          console.log("Error getting document:", error);
+      });
+    } else {
+      // No user is signed in.
+      //alert("로그인 X");
+      //console.log(user)		// 인증 후 어떤 데이터를 받아오는지 확인해보기 위함.
+    }
+});
+
+function pwLogin(){
+  var email = document.getElementById('userEmail').value;
+  var password = document.getElementById('userPassword').value;
+  firebase.auth().signInWithEmailAndPassword(email, password)
+  .then((user) => {
+    alert("로그인 성공");
+    window.location.href = "mainpage.html";
+    // Signed in
+    // ...
   })
   .catch((error) => {
-    console.log(error.code);
-    console.log(error.message);
-    // Some error occurred, you can inspect the code: error.code
-    // Common errors could be invalid email and invalid or expired OTPs.
-  });*/
-}
-
-function checkId(){
-  var db = firebase.firestore();
-  var name = document.getElementById('userID').value;
-  var query = db.collection("user").where("name","==",name);
-  idVerified = true;
-  query.get()
-  .then(function(querySnapshot) {
-      querySnapshot.forEach(function(doc) {
-          // doc.data() is never undefined for query doc snapshots
-          console.log(doc.id, " => ", doc.data());
-          alert("id "+ doc.get("name")+" already exists!");
-          idVerified = false;
-          document.getElementById('checkId').textContent = "중복확인"
-          document.getElementById('userID').value = "";
-      });
-      if(idVerified){
-        alert("id "+ name+" is available!");
-        document.getElementById('checkId').textContent = "확인완료";
-      }   
-  })
-  .catch(function(error) {
-      console.log("Error getting documents: ", error);
+    var errorCode = error.code;
+    var errorMessage = error.message;
+    console.log(errorCode);
+    alert(errorMessage);
   });
-}
-
-function checkPassword(){
-  var pw1 = document.getElementById('userPassword').value;
-  var pw2 = document.getElementById('userPassword2').value;
-  if(document.getElementById('userPassword').value.length > 0 && document.getElementById('userPassword').value.length < 6){
-    document.getElementById("check").textContent = "비밀번호는 6자 이상으로 설정해주세요"   
-    document.getElementById('check').style.color='green';
-    pwVerified = false;
-  }
-  else{  
-    if(pw1 == pw2){
-      document.getElementById("check").textContent = "비밀번호가 일치합니다"
-      document.getElementById('check').style.color='blue';
-      pwVerified = true;
-    }
-    else{
-      document.getElementById('check').innerHTML='비밀번호가 일치하지 않습니다'
-      document.getElementById('check').style.color='red';
-      pwVerified = false;
-    }
-  }
-}
-
-function signUp(){
-  flag = true;
-  if(idVerified == false){
-    flag = false;
-    alert("아이디 중복확인을 완료해주세요");
-  }
-  if(pwVerified == false){
-    flag = false;
-    alert("비밀번호 확인을 완료해주세요");
-  }
-  if(emailVerified == false){
-    flag = false;
-    alert("이메일 인증을 완료해주세요");
-  }
-  if(flag){
-    alert("회원가입 클릭");
-    var email = document.getElementById('userEmail').value;
-    var password = document.getElementById('userPassword').value;
-    var name = document.getElementById('userID').value;
-    if(!name || !password){
-      alert("회원가입 정보를 적어주세요");
-    }
-    else{
-      firebase.auth().createUserWithEmailAndPassword(email, password)
-      .then((user) => {
-        var db = firebase.firestore();
-        var name = document.getElementById('userID').value;
-        //alert("회원가입 시작 "+name+"/"+email+"/"+password);
-        var user1 = firebase.auth().currentUser;
-        user1.updateProfile({
-          displayName: name
-        }).then(function() {
-          alert(user1.displayName+"님 회원가입 완료");
-          window.location.href = "loginpage.html";
-          // Update successful.
-        }).catch(function(error) {
-          // An error happened.
-          //alert("이름 설정 에러");
-          console.log(errorCode);
-          console.log(errorMessage);
-        });
-        window.localStorage.removeItem('emailForSignIn');
-        /*db.collection("user").add({
-            name: name,
-            email: email,
-            emailVerified: true,
-            uid: "",
-            account:"",
-        })
-        .then(function(docRef) {
-            docRef.update({uid : docRef.id})
-            console.log("Document written with ID: ", docRef.id);
-        })
-        .catch(function(error) {
-            console.error("Error adding document: ", error);
-            alert(error.code+" / "+error.message);
-        });*/
-      })
-      .catch((error) => {
-        alert("회원가입 에러 "+error.code+"/"+error.message);
-      });
-    }
-  }
 }
 </script>
 </body>

@@ -168,55 +168,59 @@
 
 <script>
 var firebaseConfig = {
-    apiKey: "AIzaSyCXRTprV0yWYk8YrVpopvkFM4Cv_Nmhb2g",
-    authDomain: "shift-f80bc.firebaseapp.com",
-    databaseURL: "https://shift-f80bc-default-rtdb.firebaseio.com",
-    projectId: "shift-f80bc",
-    storageBucket: "shift-f80bc.appspot.com",
-    messagingSenderId: "111516463886",
-    appId: "1:111516463886:web:f7ae7d49add43d4cc0dd5f",
-    measurementId: "G-QXHD4RJNKQ"
-};
+    apiKey: "AIzaSyAnCGQzZWMcsci2ob13jqW1-gf8Sk-_7aU",
+    authDomain: "reserve-gwabang.firebaseapp.com",
+    databaseURL: "https://reserve-gwabang-default-rtdb.firebaseio.com",
+    projectId: "reserve-gwabang",
+    storageBucket: "reserve-gwabang.appspot.com",
+    messagingSenderId: "872525073842",
+    appId: "1:872525073842:web:2859549ab4a9ff36cfe8ab",
+    measurementId: "G-QNC7XQHCLB"
+  };
 
 // Initialize Firebase
 firebase.initializeApp(firebaseConfig);
-var emailVerified = false;
-var pwVerified = false;
-var idVerified = false;
-var email;
 
-// Confirm the link is a sign-in with email link.
-if (firebase.auth().isSignInWithEmailLink(window.location.href)) {
-  // Additional state parameters can also be passed via URL.
-  // This can be used to continue the user's intended action before triggering
-  // the sign-in operation.
-  // Get the email if available. This should be available if the user completes
-  // the flow on the same device where they started it.
-  email = window.localStorage.getItem('emailForSignIn');
-  if (!email) {
-    // User opened the link on a different device. To prevent session fixation
-    // attacks, ask the user to provide the associated email again. For example:
-    email = window.prompt('Please provide your email for confirmation');
+function validateEmail(email) {
+    const re = /^[a-zA-Z0-9]+@cau\.ac\.kr$$/;
+    const re1 = /^[a-zA-Z0-9]+@korea\.ac\.kr$$/;
+    if(re.test(String(email)) || re1.test(String(email))){
+      return true;
+    }
+    else return false;
+}
+
+function signUpEmail(){
+  var actionCodeSettings = {
+    // URL you want to redirect back to. The domain (www.example.com) for this
+    // URL must be in the authorized domains list in the Firebase Console.
+    url: 'https://reserve-gwabang.web.app/account_idpassword.html',
+    // This must be true.
+    handleCodeInApp: true
+  };
+
+  if(validateEmail(document.getElementById("userEmail").value)){
+      email = document.getElementById("userEmail").value;
+      firebase.auth().sendSignInLinkToEmail(email, actionCodeSettings)
+      .then(() => {
+        // The link was successfully sent. Inform the user.
+        // Save the email locally so you don't need to ask the user for it again
+        // if they open the link on the same device.
+        window.localStorage.setItem('emailForSignIn', email);
+        alert(email + " 이메일 전송 성공");
+        // ...
+      })
+      .catch((error) => {
+        var errorCode = error.code;
+        var errorMessage = error.message;
+        console.log(errorCode);
+        alert(errorMessage);
+        // ...
+      });
   }
-  alert("이메일 링크 로그인 " + email);
-  document.getElementById("userEmail").value = email;
-  emailVerified = true;
-  /*firebase.auth().signInWithEmailLink(email, window.location.href)
-  .then((result) => {
-    // Clear email from storage.
-    window.localStorage.removeItem('emailForSignIn');
-    // You can access the new user via result.user
-    // Additional user info profile not available via:
-    // result.additionalUserInfo.profile == null
-    // You can check if the user is new or existing:
-    // result.additionalUserInfo.isNewUser
-  })
-  .catch((error) => {
-    console.log(error.code);
-    console.log(error.message);
-    // Some error occurred, you can inspect the code: error.code
-    // Common errors could be invalid email and invalid or expired OTPs.
-  });*/
+  else{
+    alert("이메일 형식이 맞지 않습니다");
+  }
 }
 
 
