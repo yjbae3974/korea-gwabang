@@ -1,0 +1,246 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <title>전기전자공학부 과방 관리</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  <!-- Font Awesome -->
+  <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.11.2/css/all.css">
+  <!-- Bootstrap core CSS -->
+  <link href="css/bootstrap.min.css" rel="stylesheet">
+  <!-- Material Design Bootstrap -->
+  <link href="css/mdb.min.css" rel="stylesheet">
+  <!-- Your custom styles (optional) -->
+
+  <link href="css/style.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="app.css">
+  <script src="https://kit.fontawesome.com/22de0a02bc.js" crossorigin="anonymous"></script>
+  <link rel="shortcut icon" href="img\kable\eeTiger.jpg" type="image/x-icon">
+  <style>
+       @media (min-width: 1500px) {
+  .container {
+    max-width: 1440px;
+    
+  }
+  .form-control::placeholder { /* Chrome, Firefox, Opera, Safari 10.1+ */
+            color: #B1B1B1;
+            opacity: 1; /* Firefox */
+}
+
+.form-control:-ms-input-placeholder { /* Internet Explorer 10-11 */
+            color: #B1B1B1;
+}
+
+.form-control::-ms-input-placeholder { /* Microsoft Edge */
+            color: #B1B1B1;
+ }
+}
+
+  </style>
+  
+</head>
+
+<header class="text-center">
+   
+</header>
+
+<body">
+     <!-- Navbar -->
+    
+     <nav class="navbar fixed-top bg-white navbar-expand-lg navbar-light white scrolling-navbar">
+      <div class="container">
+        <a class="navbar-brand" href="#" target="">
+          <img
+          src="img\kable\kable-favicon.jpg"
+          height="50"
+          alt=""
+          loading="lazy"
+          width=""
+        />
+        </a>
+      
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#main_nav">
+            <span class="navbar-toggler-icon"></span>
+          </button>
+          <div class="collapse navbar-collapse" id="main_nav">
+        
+        
+            <a class="nav-link font-weight-bold dropdown-item"
+            role="button" aria-expanded="false" href="rules.html">이용안내</a>
+         
+      
+          </div> <!-- navbar-collapse.// -->
+      </div>
+      
+     </nav>
+  <!-- Navbar -->   
+
+  <!--Main layout-->
+  <main class="mt-4 pt-4" style="min-height: 100vh; align-items: center;">
+    <div class="container mt-5" style="">
+
+      <!--Section: Post-->
+      
+
+        <!--Grid row-->
+        <div class="row justify-content-center align-middle" style="padding-top: 5vh;">
+            
+          <!--Grid column-->
+          <div class=" col-xl-4 col-lg-6 col-md-10 col-sm-12 col-xs-12 mb-4">
+            <div style="padding: 20px">
+                <img src="img\kable\KUee_logo.png" alt="" style="width: 80%;">
+                <p class="font-weight-bold mt-3 h4" style="color:  #872434;line-height: 1.5;">
+                  전기전자공학부 애기능 학생회관 과방 이용 신청</p>
+                
+                  <div class="form-group text-left font-weight-bold mt-5">
+                    <label for="email">이메일</label>
+                    <input type="email" class="form-control" id="userEmail" placeholder="이메일">
+                </div>
+                    
+                <div class="form-group text-left font-weight-bold">
+                    <label for="pwd">비밀번호</label>
+                    <input type="password" class="form-control" id="userPassword" placeholder="비밀번호">
+                </div>
+
+                    <a type="button" class="btn btn-block text-white font-weight-bold mt-3" 
+                    style="
+                    background-color: #872434;
+                    border-radius: 1rem;
+                    font-size: 20px;
+                    text-transform: capitalize;
+                    " onclick="pwLogin();">로그인</a>
+                    
+                    <a type="button" class="btn btn-block font-weight-bold mt-3" 
+                    style="
+                    border: 2px solid #872434;
+                    color: #872434;
+                    border-radius: 1rem;
+                    font-size: 20px;
+                    " href="make_account.html">회원가입</a>
+                    <div class="text-center mt-3">
+                        <a class="mt-5" style="
+                    color: #999999;
+                    font-size: 15px;
+                    " href="find_account_password.html">비밀번호를 잊으셨나요? ></a>
+                    </div>
+                    
+                    
+                </div>
+                    
+                    <div style="height: 30px;"></div>
+                </div>
+              </div>
+            </div>
+            
+        </div> 
+
+      
+
+    </div>
+  </main>
+  <!--Main layout-->
+
+  <!--Footer-->
+  <footer class="page-footer text-center font-small" style="
+  text-align: center;
+  background-color: white;
+  border-top: 1px solid grey;
+  ">
+    <div style="height: 10px;"></div>
+    <p class="mb-3" style="color: #333333;">Copyright © 2021 k-able</p>
+    <p style="color: #333333;">이메일: brianbae6@korea.ac.kr</p>
+    <div style="height: 3px;"></div>
+  </footer>
+  <!--/.Footer-->
+
+  <!-- SCRIPTS -->
+  <!-- JQuery -->
+  <script type="text/javascript" src="js/jquery-3.4.1.min.js"></script>
+  <!-- Bootstrap tooltips -->
+  <script type="text/javascript" src="js/popper.min.js"></script>
+  <!-- Bootstrap core JavaScript -->
+  <script type="text/javascript" src="js/bootstrap.min.js"></script>
+  <!-- MDB core JavaScript -->
+  <script type="text/javascript" src="js/mdb.min.js"></script>
+  <!-- Initializations -->
+  <script type="text/javascript">
+  
+    // Animations initialization
+    new WOW().init();
+
+  </script>
+
+  <!-- The core Firebase JS SDK is always required and must be listed first -->
+<script src="https://www.gstatic.com/firebasejs/8.2.2/firebase-app.js"></script>
+
+<!-- TODO: Add SDKs for Firebase products that you want to use https://firebase.google.com/docs/web/setup#available-libraries -->
+<script src="https://www.gstatic.com/firebasejs/8.2.2/firebase-analytics.js"></script>
+
+<script src="https://www.gstatic.com/firebasejs/8.2.2/firebase-auth.js"></script>
+<script src="https://www.gstatic.com/firebasejs/8.2.2/firebase-firestore.js"></script>
+<script src="https://www.gstatic.com/firebasejs/8.2.2/firebase-database.js"></script>
+
+<script>
+var firebaseConfig = {
+    apiKey: "AIzaSyAnCGQzZWMcsci2ob13jqW1-gf8Sk-_7aU",
+    authDomain: "reserve-gwabang.firebaseapp.com",
+    databaseURL: "https://reserve-gwabang-default-rtdb.firebaseio.com",
+    projectId: "reserve-gwabang",
+    storageBucket: "reserve-gwabang.appspot.com",
+    messagingSenderId: "872525073842",
+    appId: "1:872525073842:web:2859549ab4a9ff36cfe8ab",
+    measurementId: "G-QNC7XQHCLB"
+  };
+
+// Initialize Firebase
+firebase.initializeApp(firebaseConfig);
+
+firebase.auth().onAuthStateChanged(function(user) {
+    if (user) {
+      // User is signed in.
+      alert(user.displayName+"님 안녕하세요");
+      //console.log(user)		// 인증 후 어떤 데이터를 받아오는지 확인해보기 위함.
+      var db = firebase.firestore();
+      var flag = true;
+      var docRef = db.collection("user").doc(user.uid);
+      docRef.get().then(function(doc) {
+        if (doc.exists) {
+            console.log("Document data:", doc.data()); 
+            window.location.href = "mainpage.html";
+        } 
+        else {
+           alert("로그인을 완료해주세요");
+        }
+      }).catch(function(error) {
+          console.log("Error getting document:", error);
+      });
+    } else {
+      // No user is signed in.
+      //alert("로그인 X");
+      //console.log(user)		// 인증 후 어떤 데이터를 받아오는지 확인해보기 위함.
+    }
+});
+
+function pwLogin(){
+  var email = document.getElementById('userEmail').value;
+  var password = document.getElementById('userPassword').value;
+  firebase.auth().signInWithEmailAndPassword(email, password)
+  .then((user) => {
+    alert("로그인 성공");
+    window.location.href = "mainpage.html";
+    // Signed in
+    // ...
+  })
+  .catch((error) => {
+    var errorCode = error.code;
+    var errorMessage = error.message;
+    console.log(errorCode);
+    alert(errorMessage);
+  });
+}
+</script>
+</body>
+
+</html>
