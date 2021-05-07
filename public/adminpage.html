@@ -294,19 +294,11 @@ firebase.auth().onAuthStateChanged(function(user) {
       });
     } else {
       // No user is signed in.
-      alert("로그인 X");
+      window.location.href = "loginpage.html";
+      //alert("로그인 X");
       //console.log(user)      // 인증 후 어떤 데이터를 받아오는지 확인해보기 위함.
     }
 });
-
-
-      /*<td>{{name}}</td>
-        <td>{{contack}}</td>
-        <td>{{email}}</td>
-        <td>{{id}}</td>
-        <td>{{start}}</td>
-        <td>{{end}}</td>
-        <td>{{prupose}}</td>*/
 
 // 템플릿 해석
 var source   = $("#some-template").html();
@@ -349,12 +341,20 @@ db.collection("reservation").get().then(function(querySnapshot) {
     console.log("Error getting documents: ", error);
 });
 
-
+function logout(){
+  firebase.auth().signOut().then(function() {
+      alert("로그아웃 성공");
+      window.location.href = "loginpage.html";
+    // Sign-out successful.
+    }).catch(function(error) {
+      alert("에러");
+    // An error happened.
+    });
+}
 /*
         var stt = new Date(doc.get("start"));
         var endt = new Date(doc.get("end"));
         var curt = new Date();
-
         if(stt<= curt && curt<=endt){
           var temp = new Object();
           temp.start = doc.get("start");
@@ -362,7 +362,6 @@ db.collection("reservation").get().then(function(querySnapshot) {
           temp.purpose = doc.get("purpose");
           temp.id = doc.get("id");
           dataArray.push(temp);
-
           data.contents = dataArray;
           // div id=content-placeholder 에 결과 내역을 렌더링한다 
           $("#content-placeholder").html(template(data));
