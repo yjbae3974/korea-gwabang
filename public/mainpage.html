@@ -355,33 +355,33 @@ document.getElementById('endTime').setAttribute("max",getTomorrowDate());
 
 var userId;
 //여기가 로그인관련 소스
-//firebase.auth().onAuthStateChanged(function(user) {
-//    if (user) {
-//      // User is signed in.
-//      //console.log(user)		// 인증 후 어떤 데이터를 받아오는지 확인해보기 위함.
-//      var db = firebase.firestore();
-//      var flag = true;
-//      var docRef = db.collection("user").doc(user.uid);
-//      docRef.get().then(function(doc) {
-//        if (doc.exists) {
-//            //alert(user.displayName+"님 안녕하세요");
-//            userId = doc.id;
-//            console.log("Document data:", doc.data());
-//        } 
-//        else {
-//           alert("로그인을 완료해주세요");
-//           window.location.href = "loginpage.html";
-//        }
-//      }).catch(function(error) {
-//          console.log("Error getting document:", error);
-//      });
-//    } else {
-//      // No user is signed in.
-//      //alert("로그인 X");
-//      window.location.href = "loginpage.html";
-//      //console.log(user)		// 인증 후 어떤 데이터를 받아오는지 확인해보기 위함.
-//    }
-//});
+firebase.auth().onAuthStateChanged(function(user) {
+    if (user) {
+      // User is signed in.
+      //console.log(user)		// 인증 후 어떤 데이터를 받아오는지 확인해보기 위함.
+      var db = firebase.firestore();
+      var flag = true;
+      var docRef = db.collection("user").doc(user.uid);
+      docRef.get().then(function(doc) {
+        if (doc.exists) {
+            //alert(user.displayName+"님 안녕하세요");
+            userId = doc.id;
+            console.log("Document data:", doc.data());
+        } 
+        else {
+           alert("로그인을 완료해주세요");
+           window.location.href = "loginpage.html";
+        }
+      }).catch(function(error) {
+          console.log("Error getting document:", error);
+      });
+    } else {
+      // No user is signed in.
+      //alert("로그인 X");
+      window.location.href = "loginpage.html";
+      //console.log(user)		// 인증 후 어떤 데이터를 받아오는지 확인해보기 위함.
+    }
+});
 
 
 // 템플릿 해석

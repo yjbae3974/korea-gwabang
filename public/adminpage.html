@@ -281,7 +281,7 @@ firebase.auth().onAuthStateChanged(function(user) {
       var docRef = db.collection("user").doc(user.uid);
       docRef.get().then(function(doc) {
         if (doc.exists) {
-            //alert(user.displayName+"님 안녕하세요");
+            alert(user.displayName+"님 안녕하세요");
             userId = doc.id;
             console.log("Document data:", doc.data());
         } 
