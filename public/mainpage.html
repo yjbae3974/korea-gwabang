@@ -22,26 +22,27 @@
   <style>
       a.active.nav-link{color: #872434!important;border-bottom: 1px solid #872434!important;}
        @media (min-width: 1500px) {
-  .container {
-    max-width: 1440px;
-    
-  }
-  .form-control::placeholder { /* Chrome, Firefox, Opera, Safari 10.1+ */
-            color: #B1B1B1;
-            opacity: 1; /* Firefox */
-}
+        .container {
+          max-width: 1440px;
+          
+        }
+        .form-control::placeholder { /* Chrome, Firefox, Opera, Safari 10.1+ */
+                    color: #B1B1B1;
+                    opacity: 1; /* Firefox */
+        }
 
-.form-control:-ms-input-placeholder { /* Internet Explorer 10-11 */
-            color: #B1B1B1;
-}
+        .form-control:-ms-input-placeholder { /* Internet Explorer 10-11 */
+                    color: #B1B1B1;
+        }
 
-.form-control::-ms-input-placeholder { /* Microsoft Edge */
-            color: #B1B1B1;
- }
-}
-.container{
-  padding:0px;
-}
+        .form-control::-ms-input-placeholder { /* Microsoft Edge */
+                    color: #B1B1B1;
+        }
+      }
+      .container {
+        padding: 0px;
+        
+      }
 
   </style>
   
@@ -95,9 +96,9 @@
           <!--Grid column-->
           <div class=" col-xl-4 col-lg-6 col-md-10 col-sm-12 col-xs-12 mb-4">
             <div style="padding: 20px">
-                <img src="img\kable\KUengineering.png" alt="" style="height: 65px; object-fit: contain;">
+                <img src="img\kable\KUee_logo.png" alt="" style="width: 80%;">
                 <p class="font-weight-bold mt-3 h4" style="color:  #872434;line-height: 1.5;">
-                  이공계 캠퍼스 애기능 학생회관<br> 과방 이용 신청</p>
+                  전기전자공학부 애기능 학생회관<br> 과방 이용 신청</p>
                 
                 <ul class="nav nav-tabs mb-3" id="ex1" role="tablist" style="border-bottom: 1px solid #B1B1B1;">
                     <li class="nav-item" role="presentation" style="width: 50%;">
@@ -140,47 +141,20 @@
                       aria-labelledby="ex1-tab-1"
                     >
                     <div class="container">
-                        <div class="font-weight-bold" style="">현재 수용인원: <span>{0}</span>명</div>
-                        <div class="font-weight-bold" style="">최대 수용인원: <span>4</span>명</div>
-                        <div class="font-weight-bold mt-3" style="color: #872434;">이용 현황</div>
+                        <div class="font-weight-bold" style="">현재 수용인원: <span id = "userNum">0</span>명</div>
+                        <div class="font-weight-bold" style="">최대 수용인원: <span id = "maxNum">4</span>명</div>
                         <div class="mt-3">
                             <div class="row" style="font-size: 14px;">
                                 <div class="col-4 list-setting">
-                                    <div class="text-center list-title">이용시작시각</div>
+                                    <div class="text-center list-title">이용 시작 시간</div>
                                   </div>
                                   <div class="col-4 list-setting">
-                                    <div class="text-center list-title">이용예정시간</div>
+                                    <div class="text-center list-title">이용 종료 시간</div>
                                   </div>
                                   <div class="col-4 list-setting">
                                     <div class="text-center list-title">사유</div>
                                   </div>
-                                 
                               </div>
-          
-                              <div class="row" style="font-size: 14px;">
-                                  <div class="col-4 list-setting">
-                                    <div class="text-center list-content">20.01.28 18:34:34</div>
-                                  </div>
-                                  <div class="col-4 list-setting">
-                                    <div class="text-center list-content">6시간</div>
-                                  </div>
-                                  <div class="col-4 list-setting">
-                                    <div class="text-center list-content">술 취함</div>
-                                  </div>
-                                  
-                              </div>
-                              <div class="row" style="font-size: 14px;">
-                                <div class="col-4 list-setting">
-                                  <div class="text-center list-content">20.01.28 18:34:34</div>
-                                </div>
-                                <div class="col-4 list-setting" style="display: flexbox;">
-                                  <div class="text-center list-content align-middle">6시간</div>
-                                </div>
-                                <div class="col-4 list-setting">
-                                  <div class="text-center list-content">참교육 당함</div>
-                                </div>
-                                
-                            </div>
           
                               <!--Content start-->
                               <div id="content-placeholder" class="mb-5"></div>
@@ -199,33 +173,11 @@
                                   <div class="text-center list-title">사유</div>
                                 </div>
                                
+                                <!--Content start-->
+                                <div id="content-placeholder2" class="mb-5"></div>
+                                <!--Content end-->
                             </div>
-        
-                            <div class="row" style="font-size: 14px;">
-                                <div class="col-4 list-setting">
-                                  <div class="text-center list-content">20.01.28 18:34:34</div>
-                                </div>
-                                <div class="col-4 list-setting">
-                                  <div class="text-center list-content">6시간</div>
-                                </div>
-                                <div class="col-4 list-setting">
-                                  <div class="text-center list-content">술 취함</div>
-                                </div>
-                                
-                            </div>
-                            <div class="row" style="font-size: 14px;">
-                              <div class="col-4 list-setting">
-                                <div class="text-center list-content">20.01.28 18:34:34</div>
-                              </div>
-                              <div class="col-4 list-setting" style="display: flexbox;">
-                                <div class="text-center list-content align-middle">6시간</div>
-                              </div>
-                              <div class="col-4 list-setting">
-                                <div class="text-center list-content">참교육 당함</div>
-                              </div>
-                              
-                          </div>
-                          <a class="btn text-white font-weight-bold mt-5" href="" style="background-color: #872434; font-size: 16px; margin-left: 0;">이용취소하기</a>
+                          <a class="btn text-white font-weight-bold mt-5" onclick="cancelReserve()" style="background-color: #872434; font-size: 16px; margin-left: 0;">이용취소하기</a>
                             <!--Content start-->
                             <div id="content-placeholder" class="mb-5"></div>
                             <!--Content end-->
@@ -237,19 +189,19 @@
                     <div class="tab-pane fade" id="ex1-tabs-2" role="tabpanel" aria-labelledby="ex1-tab-2">
                       <form action="/action_page.php">
                         <label class="font-weight-bold" for="appt">이용 시작 시각:</label>
-                        <input class="form-control" type="time" id="appt" name="appt">
+                        <input class="form-control" type="time" id="startTime" name="appt">
                       </form>
                       <form class="mt-3" action="/action_page.php">
                         <label class="font-weight-bold" for="appt">이용 완료 시각:</label>
-                        <input class="form-control" type="time" id="appt" name="appt">
+                        <input class="form-control" type="time" id="endTime" name="appt">
                       </form>
                         
                         <div class="form-group text-left font-weight-bold mt-5">
                             <label for="">이용 사유</label>
-                            <input type="" class="form-control" id="usingTime" placeholder="이용 사유를 입력하세요">
+                            <input type="" class="form-control" id="usingPurpose" placeholder="이용 사유를 입력하세요">
                         </div>
             
-                        <a type="button" class="btn text-white font-weight-bold mt-5" href="" style="background-color: #872434; font-size: 16px; margin-left: 0;">신청하기</a>       
+                        <a type="button" class="btn text-white font-weight-bold mt-5" id="submitBtn" onclick="submit()" style="background-color: #872434; font-size: 16px; margin-left: 0;">신청하기</a>       
                     </div>
                     </div>
                    
@@ -264,7 +216,7 @@
                     color: #872434;
                     border-radius: 1rem;
                     font-size: 16px;
-                    " href="">로그아웃</a>
+                    " onclick="logout()">로그아웃</a>
                 </div>
                 <div class="text-center font-weight-bold mt-3" style="color: #872434;line-height: 2rem;">
                   반드시 이용안내 페이지를 충분히 숙지하신 후, 이용해주시기 바랍니다!
@@ -312,6 +264,23 @@
 
   </script>
 
+<script id="some-template" type="text/x-handlebars-template">
+  {{#contents}}
+  <div class="row" style="font-size: 14px;">
+      <div class="col-4 list-setting">
+        <div class="text-center list-content">{{start}}</div>
+      </div>
+      <div class="col-4 list-setting">
+        <div class="text-center list-content">{{end}}</div>
+      </div>
+      <div class="col-4 list-setting" style="font-size: 12px;">
+        <div class="text-center list-content" style="padding-left: 0px; padding-right: 0px;">{{purpose}}<br>{{flag}}</div>
+      </div>
+  </div>
+  {{/contents}}
+</script>
+
+
   <!-- The core Firebase JS SDK is always required and must be listed first -->
 <script src="https://www.gstatic.com/firebasejs/8.2.2/firebase-app.js"></script>
 
@@ -321,60 +290,295 @@
 <script src="https://www.gstatic.com/firebasejs/8.2.2/firebase-auth.js"></script>
 <script src="https://www.gstatic.com/firebasejs/8.2.2/firebase-firestore.js"></script>
 <script src="https://www.gstatic.com/firebasejs/8.2.2/firebase-database.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/handlebars.js/4.7.6/handlebars.min.js" integrity="sha512-zT3zHcFYbQwjHdKjCu6OMmETx8fJA9S7E6W7kBeFxultf75OPTYUJigEKX58qgyQMi1m1EgenfjMXlRZG8BXaw==" crossorigin="anonymous"></script>
 
 <script>
 var firebaseConfig = {
-    apiKey: "AIzaSyCXRTprV0yWYk8YrVpopvkFM4Cv_Nmhb2g",
-    authDomain: "shift-f80bc.firebaseapp.com",
-    databaseURL: "https://shift-f80bc-default-rtdb.firebaseio.com",
-    projectId: "shift-f80bc",
-    storageBucket: "shift-f80bc.appspot.com",
-    messagingSenderId: "111516463886",
-    appId: "1:111516463886:web:f7ae7d49add43d4cc0dd5f",
-    measurementId: "G-QXHD4RJNKQ"
-};
+    apiKey: "AIzaSyAnCGQzZWMcsci2ob13jqW1-gf8Sk-_7aU",
+    authDomain: "reserve-gwabang.firebaseapp.com",
+    databaseURL: "https://reserve-gwabang-default-rtdb.firebaseio.com",
+    projectId: "reserve-gwabang",
+    storageBucket: "reserve-gwabang.appspot.com",
+    messagingSenderId: "872525073842",
+    appId: "1:872525073842:web:2859549ab4a9ff36cfe8ab",
+    measurementId: "G-QNC7XQHCLB"
+  };
 
 // Initialize Firebase
 firebase.initializeApp(firebaseConfig);
-var emailVerified = false;
-var pwVerified = false;
-var idVerified = false;
-var email;
 
-// Confirm the link is a sign-in with email link.
-if (firebase.auth().isSignInWithEmailLink(window.location.href)) {
-  // Additional state parameters can also be passed via URL.
-  // This can be used to continue the user's intended action before triggering
-  // the sign-in operation.
-  // Get the email if available. This should be available if the user completes
-  // the flow on the same device where they started it.
-  email = window.localStorage.getItem('emailForSignIn');
-  if (!email) {
-    // User opened the link on a different device. To prevent session fixation
-    // attacks, ask the user to provide the associated email again. For example:
-    email = window.prompt('Please provide your email for confirmation');
-  }
-  alert("이메일 링크 로그인 " + email);
-  document.getElementById("userEmail").value = email;
-  emailVerified = true;
-  /*firebase.auth().signInWithEmailLink(email, window.location.href)
-  .then((result) => {
-    // Clear email from storage.
-    window.localStorage.removeItem('emailForSignIn');
-    // You can access the new user via result.user
-    // Additional user info profile not available via:
-    // result.additionalUserInfo.profile == null
-    // You can check if the user is new or existing:
-    // result.additionalUserInfo.isNewUser
-  })
-  .catch((error) => {
-    console.log(error.code);
-    console.log(error.message);
-    // Some error occurred, you can inspect the code: error.code
-    // Common errors could be invalid email and invalid or expired OTPs.
-  });*/
+function getDate(){
+  var today = new Date();
+  var dd = String(today.getDate()).padStart(2, '0');
+  var mm = String(today.getMonth() + 1).padStart(2, '0'); //January is 0!
+  var yyyy = today.getFullYear();
+
+  today = yyyy + '/' + mm + '/' + dd +' ';
+  return today;
 }
 
+function getNextDate(){
+  var today = new Date();
+  var tomorrow = new Date(today)
+  tomorrow.setDate(tomorrow.getDate() + 1)
+  var dd = String(tomorrow.getDate()).padStart(2, '0');
+  var mm = String(tomorrow.getMonth() + 1).padStart(2, '0'); //January is 0!
+  var yyyy = tomorrow.getFullYear();
+
+  tomorrow = yyyy + '/' + mm + '/' + dd +' ';
+  return tomorrow;
+}
+
+var userId;
+
+firebase.auth().onAuthStateChanged(function(user) {
+    if (user) {
+      // User is signed in.
+      //console.log(user)		// 인증 후 어떤 데이터를 받아오는지 확인해보기 위함.
+      var db = firebase.firestore();
+      var flag = true;
+      var docRef = db.collection("user").doc(user.uid);
+      docRef.get().then(function(doc) {
+        if (doc.exists) {
+            //alert(user.displayName+"님 안녕하세요");
+            userId = doc.id;
+            console.log("Document data:", doc.data());
+        } 
+        else {
+           alert("로그인을 완료해주세요");
+           window.location.href = "loginpage.html";
+        }
+      }).catch(function(error) {
+          console.log("Error getting document:", error);
+      });
+    } else {
+      // No user is signed in.
+      //alert("로그인 X");
+      window.location.href = "loginpage.html";
+      //console.log(user)		// 인증 후 어떤 데이터를 받아오는지 확인해보기 위함.
+    }
+});
+
+
+// 템플릿 해석
+var source   = $("#some-template").html();
+var template = Handlebars.compile(source);
+
+var db = firebase.firestore();
+var data = new Object();
+var dataArray = new Array();
+var flag = true;
+
+var db = firebase.firestore();
+var query = db.collection("reservation").orderBy("created");
+query.get()
+.then(function(querySnapshot) {
+    querySnapshot.forEach(function(doc) {
+        //console.log(doc.id, " => ", doc.data());
+
+        var stt = new Date(doc.get("start"));
+        var endt = new Date(doc.get("end"));
+        var curt = new Date();
+
+        //alert(stt+" "+curt+" "+endt+" "+flag);
+
+        if(stt<= curt && curt<=endt){
+          var temp = new Object();
+          temp.start = doc.get("start");
+          temp.end = doc.get("end");
+          temp.purpose = doc.get("purpose");
+          temp.id = doc.get("id");
+          if(flag){
+            temp.flag = "(이용가능)"
+          }
+          else{
+            temp.flag = "(이용불가)"
+          }
+          dataArray.push(temp);
+
+          data.contents = dataArray;
+          // div id=content-placeholder 에 결과 내역을 렌더링한다 
+          $("#content-placeholder").html(template(data));
+          var num = document.getElementById('userNum').textContent*1 + 1;
+          var max = document.getElementById('maxNum').textContent*1;
+
+          if(num<=max) document.getElementById('userNum').textContent = num;
+
+          if(num>=max){
+            document.getElementById('submitBtn').textContent="현재 시간에는 사용불가";
+            flag = false;
+          }
+        }
+    });
+})
+.catch(function(error) {
+    console.log("Error getting documents: ", error);
+});
+
+
+// 이용예정현황
+// 템플릿 해석
+var source   = $("#some-template").html();
+var template = Handlebars.compile(source);
+
+var db = firebase.firestore();
+var data2 = new Object();
+var dataArray2 = new Array();
+
+var db = firebase.firestore();
+var query = db.collection("reservation").orderBy("created");
+query.get()
+.then(function(querySnapshot) {
+    querySnapshot.forEach(function(doc) {
+        //console.log(doc.id, " => ", doc.data());
+
+        var stt = new Date(doc.get("start"));
+        var endt = new Date(doc.get("end"));
+        var curt = new Date();
+
+        if(curt<=stt){
+          var temp = new Object();
+          temp.start = doc.get("start");
+          temp.end = doc.get("end");
+          temp.purpose = doc.get("purpose");
+          temp.id = doc.get("id");
+          dataArray2.push(temp);
+
+          data2.contents = dataArray2;
+          // div id=content-placeholder 에 결과 내역을 렌더링한다 
+          $("#content-placeholder2").html(template(data2));
+          //var num = document.getElementById('userNum').textContent*1 + 1;
+          //var max = document.getElementById('maxNum').textContent*1;
+          //document.getElementById('userNum').textContent = num;
+        }
+    });
+})
+.catch(function(error) {
+    console.log("Error getting documents: ", error);
+});
+
+var deleteArr = new Array();
+function cancelReserve(){
+  if(confirm("팝업창에 뜨는 예약내역 중 삭제하고 싶다면 확인, 아니라면 취소를 눌러주세요. \n계속하시겠습니까?")){
+    var db = firebase.firestore();
+    console.log(userId);
+    var query = db.collection("reservation").where("id","==",userId);
+    query.get()
+    .then(function(querySnapshot) {
+        querySnapshot.forEach(function(doc) {
+            //console.log(doc.id, " => ", doc.data());
+
+            var stt = new Date(doc.get("start"));
+            var endt = new Date(doc.get("end"));
+            var curt = new Date();
+
+            if(curt<=endt){
+              if(confirm("시작시간: "+doc.get("start")+"\n종료시간: "+doc.get("end")+"\n사유: "+doc.get("purpose"))){
+                deleteArr.push(doc.id);
+                db.collection("reservation").doc(doc.id).delete().then(() => {
+                    alert("삭제되었습니다. 새로고침을 눌러주세요");
+                }).catch((error) => {
+                    alert("Error removing document: ", error);
+                });
+              }
+            }
+        });
+    })
+    .catch(function(error) {
+        console.log("Error getting documents: ", error);
+    }); 
+  }
+}
+
+
+var startTime;
+var endTime;
+
+function validateTime(start, end) {
+    const re = /^([0-1]?[0-9]|2[0-4]):([0-5][0-9])(:[0-5][0-9])?$/;
+    //alert(getDate()+start+" "+getDate()+end);
+    if(re.test(String(start)) && re.test(String(end))){
+        var stt = new Date(getDate() + start).getTime();
+        startTime = getDate() + start;
+
+        var endt= new Date(getDate() + end).getTime();
+        endTime = getDate() + end;
+        
+        var curt = new Date().getTime();
+
+        if(endt < curt){
+          if(confirm("종료 시간이 현재 시간보다 빠릅니다. 내일 "+end+"로 예약하시겠습니까?")) {
+            endt = new Date(getNextDate() + end).getTime();
+            endTime = getNextDate() + end;
+            getNextDate() + end;
+          }
+          else return false;
+        }
+        if(endt < stt){
+          if(confirm("종료 시간이 시작 시간보다 빠릅니다. 내일 "+end+"로 예약하시겠습니까?")) {
+            endt= new Date(getNextDate() + end).getTime();
+            endTime = getNextDate() + end;
+            getNextDate() + end;
+          }
+          else return false;
+        }
+        alert("시작시간:"+startTime+" \n종료시간:"+endTime);
+        return true;
+    } 
+    return false;
+}
+
+function submit(){
+  var db = firebase.firestore();
+  
+  var start = document.getElementById('startTime').value;
+  var end = document.getElementById('endTime').value;
+  var purpose = document.getElementById('usingPurpose').value
+
+  var flag = true;
+  var max = document.getElementById('maxNum').textContent*1;
+  if(document.getElementById('userNum').textContent*1>=max){
+    flag = false;
+    if(confirm("현재 "+max+"명이 초과되어 이용할 수 없습니다. \n예약현황을 확인한 후 다른 시간대에 예약해주세요")){
+      flag = true;
+    }
+  }
+
+  if(start=="" || start==null || end=="" || end==null || validateTime(start, end)==false){
+    alert("사용시간을 확인해주세요");
+  }
+  else if(purpose=="" || purpose==null){
+    alert("사용목적을 입력해주세요");
+  }
+  else if(flag){
+    db.collection("reservation").add({
+      created: firebase.firestore.FieldValue.serverTimestamp() ,
+      start : startTime,
+      end : endTime,
+      id : userId,
+      purpose : purpose
+    })
+    .then(function(docRef) {
+        if(confirm("제출이 완료되었습니다")) {
+            window.location.href = "mainpage.html";
+        }
+    })
+    .catch(function(error) {
+        console.error("Error adding document: ", error);
+    });
+  }
+}
+
+function logout(){
+  firebase.auth().signOut().then(function() {
+      alert("로그아웃 성공");
+      window.location.href = "loginpage.html";
+    // Sign-out successful.
+    }).catch(function(error) {
+      alert("에러");
+    // An error happened.
+    });
+}
 
 </script>
 </body>

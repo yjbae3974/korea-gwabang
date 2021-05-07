@@ -51,7 +51,7 @@
     
      <nav class="navbar fixed-top bg-white navbar-expand-lg navbar-light white scrolling-navbar">
       <div class="container">
-        <a class="navbar-brand mr-5" href="#" target="">
+        <a class="navbar-brand" href="#" target="">
           <img
           src="img\kable\kable-favicon.jpg"
           height="50"
@@ -78,37 +78,54 @@
   <!-- Navbar -->   
 
   <!--Main layout-->
-  <main class="mt-4 pt-4" style="min-height: 100%; align-items: center;">
+  <main class="mt-4 pt-4" style="min-height: 100vh; align-items: center;">
     <div class="container mt-5" style="">
 
       <!--Section: Post-->
-      <section class="mt-0">
+      
 
         <!--Grid row-->
-        <div class="row justify-content-center align-middle">
+        <div class="row justify-content-center align-middle" style="padding-top: 5vh;">
             
           <!--Grid column-->
           <div class=" col-xl-4 col-lg-6 col-md-10 col-sm-12 col-xs-12 mb-4">
-              <div  class="text-center" style="">
-                <p class="font-weight-bold mb-5 mt-5 h4" style="color: #872434;">계정 생성</p>
-                <div style="padding: 20px 20px;">
-                  <p class="font-weight-bold text-left">본인확인을 진행해주세요<br>
-                    <span style="color: #872434;">반드시 korea.ac.kr로 끝나는 학교이메일이어야 합니다!</span></p> 
-                  <div class="form-group text-left font-weight-bold">
-                    <label for="usr">이메일(본인인증용)</label>
-                    <input type="email" class="form-control" id="userEmail" placeholder="ENTER YOUR EMAIL">
-                  </div>
-
+            <div style="padding: 20px">
+                <img src="img\kable\KUee_logo.png" alt="" style="width: 80%;">
+                <p class="font-weight-bold mt-3 h4" style="color:  #872434;line-height: 1.5;">
+                  전기전자공학부 애기능 학생회관 과방 이용 신청</p>
                 
-                <div style="height: 15px;"></div>
-                    <a type="button" class="btn btn-block text-white font-weight-bold" 
+                  <div class="form-group text-left font-weight-bold mt-5">
+                    <label for="email">이메일</label>
+                    <input type="email" class="form-control" id="userEmail" placeholder="이메일">
+                </div>
+                    
+                <div class="form-group text-left font-weight-bold">
+                    <label for="pwd">비밀번호</label>
+                    <input type="password" class="form-control" id="userPassword" placeholder="비밀번호">
+                </div>
+
+                    <a type="button" class="btn btn-block text-white font-weight-bold mt-3" 
                     style="
                     background-color: #872434;
                     border-radius: 1rem;
                     font-size: 20px;
                     text-transform: capitalize;
-                    " onclick="signUpEmail();">인증메일 보내기</a>
-                    <div class="" style="height: 20px;"></div>
+                    " onclick="pwLogin();">로그인</a>
+                    
+                    <a type="button" class="btn btn-block font-weight-bold mt-3" 
+                    style="
+                    border: 2px solid #872434;
+                    color: #872434;
+                    border-radius: 1rem;
+                    font-size: 20px;
+                    " href="make_account.html">회원가입</a>
+                    <div class="text-center mt-3">
+                        <a class="mt-5" style="
+                    color: #999999;
+                    font-size: 15px;
+                    " href="find_account_password.html">비밀번호를 잊으셨나요? ></a>
+                    </div>
+                    
                     
                 </div>
                     
@@ -119,8 +136,7 @@
             
         </div> 
 
-      </section>
-      <!--Section: Post-->
+      
 
     </div>
   </main>
@@ -181,49 +197,49 @@ var firebaseConfig = {
 // Initialize Firebase
 firebase.initializeApp(firebaseConfig);
 
-function validateEmail(email) {
-    const re = /^[a-zA-Z0-9]+@cau\.ac\.kr$$/;
-    const re1 = /^[a-zA-Z0-9]+@korea\.ac\.kr$$/;
-    if(re.test(String(email)) || re1.test(String(email))){
-      return true;
-    }
-    else return false;
-}
-
-function signUpEmail(){
-  var actionCodeSettings = {
-    // URL you want to redirect back to. The domain (www.example.com) for this
-    // URL must be in the authorized domains list in the Firebase Console.
-    url: 'https://reserve-gwabang.web.app/account_idpassword.html',
-    // This must be true.
-    handleCodeInApp: true
-  };
-
-  if(validateEmail(document.getElementById("userEmail").value)){
-      email = document.getElementById("userEmail").value;
-      firebase.auth().sendSignInLinkToEmail(email, actionCodeSettings)
-      .then(() => {
-        // The link was successfully sent. Inform the user.
-        // Save the email locally so you don't need to ask the user for it again
-        // if they open the link on the same device.
-        window.localStorage.setItem('emailForSignIn', email);
-        alert(email + " 이메일 전송 성공");
-        // ...
-      })
-      .catch((error) => {
-        var errorCode = error.code;
-        var errorMessage = error.message;
-        console.log(errorCode);
-        alert(errorMessage);
-        // ...
+firebase.auth().onAuthStateChanged(function(user) {
+    if (user) {
+      // User is signed in.
+      alert(user.displayName+"님 안녕하세요");
+      //console.log(user)		// 인증 후 어떤 데이터를 받아오는지 확인해보기 위함.
+      var db = firebase.firestore();
+      var flag = true;
+      var docRef = db.collection("user").doc(user.uid);
+      docRef.get().then(function(doc) {
+        if (doc.exists) {
+            console.log("Document data:", doc.data()); 
+            window.location.href = "mainpage.html";
+        } 
+        else {
+           alert("로그인을 완료해주세요");
+        }
+      }).catch(function(error) {
+          console.log("Error getting document:", error);
       });
-  }
-  else{
-    alert("이메일 형식이 맞지 않습니다");
-  }
+    } else {
+      // No user is signed in.
+      //alert("로그인 X");
+      //console.log(user)		// 인증 후 어떤 데이터를 받아오는지 확인해보기 위함.
+    }
+});
+
+function pwLogin(){
+  var email = document.getElementById('userEmail').value;
+  var password = document.getElementById('userPassword').value;
+  firebase.auth().signInWithEmailAndPassword(email, password)
+  .then((user) => {
+    alert("로그인 성공");
+    window.location.href = "mainpage.html";
+    // Signed in
+    // ...
+  })
+  .catch((error) => {
+    var errorCode = error.code;
+    var errorMessage = error.message;
+    console.log(errorCode);
+    alert(errorMessage);
+  });
 }
-
-
 </script>
 </body>
 
