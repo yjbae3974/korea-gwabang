@@ -336,6 +336,7 @@ function getTodayDate(){
   var day = ("0" + date.getDate()).slice(-2);
   return year + "-" + month + "-" + day+"T00:00";
 }
+
 function getTomorrowDate(){
   var today = new Date();
   var tomorrow = new Date(today)
@@ -347,6 +348,7 @@ function getTomorrowDate(){
   tomorrow = yyyy + '-' + mm + '-' + dd ;
   return tomorrow+'T23:59';
 }
+
 document.getElementById('startTime').setAttribute("min",getTodayDate());
 document.getElementById('startTime').setAttribute("max",getTomorrowDate());
 document.getElementById('endTime').setAttribute("min",getTodayDate());
@@ -354,6 +356,7 @@ document.getElementById('endTime').setAttribute("max",getTomorrowDate());
 
 
 var userId;
+var userDepartment;
 //여기가 로그인관련 소스
 firebase.auth().onAuthStateChanged(function(user) {
     if (user) {
@@ -366,7 +369,10 @@ firebase.auth().onAuthStateChanged(function(user) {
         if (doc.exists) {
             //alert(user.displayName+"님 안녕하세요");
             userId = doc.id;
+            userDepartment = doc.get("department");
             console.log("Document data:", doc.data());
+            makeCurrentStateTable();
+            makeFutureStateTable();
         } 
         else {
            alert("로그인을 완료해주세요");
@@ -384,102 +390,107 @@ firebase.auth().onAuthStateChanged(function(user) {
 });
 
 
-// 템플릿 해석
-var source   = $("#some-template").html();
-var template = Handlebars.compile(source);
+function makeCurrentStateTable(){
+    // 템플릿 해석
+    var source   = $("#some-template").html();
+    var template = Handlebars.compile(source);
 
-var db = firebase.firestore();
-var data = new Object();
-var dataArray = new Array();
-var flag = true;
+    var db = firebase.firestore();
+    var data = new Object();
+    var dataArray = new Array();
+    var flag = true;
 
-var db = firebase.firestore();
-var query = db.collection("reservation").orderBy("created");
-query.get()
-.then(function(querySnapshot) {
-    querySnapshot.forEach(function(doc) {
-        //console.log(doc.id, " => ", doc.data());
+    var db = firebase.firestore();
+    var query = db.collection("reservation").orderBy("created");
+    query.get()
+    .then(function(querySnapshot) {
+        querySnapshot.forEach(function(doc) {
+            //console.log(doc.id, " => ", doc.data());
 
-        var stt = new Date(doc.get("start"));
-        var endt = new Date(doc.get("end"));
-        var curt = new Date();
+            var stt = new Date(doc.get("start"));
+            var endt = new Date(doc.get("end"));
+            var curt = new Date();
 
-        //alert(stt+" "+curt+" "+endt+" "+flag);
+            if(stt<= curt && curt<=endt  && doc.get("department") == userDepartment){
+              var temp = new Object();
+              temp.start = doc.get("start");
+              temp.end = doc.get("end");
+              temp.purpose = doc.get("purpose");
+              temp.id = doc.get("id");
+              if(flag){
+                temp.flag = "(이용가능)"
+              }
+              else{
+                temp.flag = "(이용불가)"
+              }
+              dataArray.push(temp);
 
-        if(stt<= curt && curt<=endt){
-          var temp = new Object();
-          temp.start = doc.get("start");
-          temp.end = doc.get("end");
-          temp.purpose = doc.get("purpose");
-          temp.id = doc.get("id");
-          if(flag){
-            temp.flag = "(이용가능)"
-          }
-          else{
-            temp.flag = "(이용불가)"
-          }
-          dataArray.push(temp);
+              data.contents = dataArray;
+              // div id=content-placeholder 에 결과 내역을 렌더링한다 
+              $("#content-placeholder").html(template(data));
+              var num = document.getElementById('userNum').textContent*1 + 1;
+              var max = document.getElementById('maxNum').textContent*1;
 
-          data.contents = dataArray;
-          // div id=content-placeholder 에 결과 내역을 렌더링한다 
-          $("#content-placeholder").html(template(data));
-          var num = document.getElementById('userNum').textContent*1 + 1;
-          var max = document.getElementById('maxNum').textContent*1;
+              if(num<=max) document.getElementById('userNum').textContent = num;
 
-          if(num<=max) document.getElementById('userNum').textContent = num;
-
-          if(num>=max){
-            document.getElementById('submitBtn').textContent="현재 시간에는 사용불가";
-            flag = false;
-          }
-        }
+              if(num>=max){
+                document.getElementById('submitBtn').textContent="현재 시간에는 사용불가";
+                flag = false;
+              }
+            }
+        });
+    })
+    .catch(function(error) {
+        console.log("Error getting documents: ", error);
     });
-})
-.catch(function(error) {
-    console.log("Error getting documents: ", error);
-});
+}
 
 
-// 이용예정현황
-// 템플릿 해석
-var source   = $("#some-template").html();
-var template = Handlebars.compile(source);
+function makeFutureStateTable(){
+    // 이용예정현황
+    // 템플릿 해석
+    var source   = $("#some-template").html();
+    var template = Handlebars.compile(source);
 
-var db = firebase.firestore();
-var data2 = new Object();
-var dataArray2 = new Array();
+    var db = firebase.firestore();
+    var data2 = new Object();
+    var dataArray2 = new Array();
 
-var db = firebase.firestore();
-var query = db.collection("reservation").orderBy("created");
-query.get()
-.then(function(querySnapshot) {
-    querySnapshot.forEach(function(doc) {
-        //console.log(doc.id, " => ", doc.data());
+    var db = firebase.firestore();
+    var query = db.collection("reservation").orderBy("created");
+    query.get()
+    .then(function(querySnapshot) {
+        querySnapshot.forEach(function(doc) {
+            //console.log(doc.id, " => ", doc.data());
 
-        var stt = new Date(doc.get("start"));
-        var endt = new Date(doc.get("end"));
-        var curt = new Date();
+            var stt = new Date(doc.get("start"));
+            var endt = new Date(doc.get("end"));
+            var curt = new Date();
 
-        if(curt<=stt){
-          var temp = new Object();
-          temp.start = doc.get("start");
-          temp.end = doc.get("end");
-          temp.purpose = doc.get("purpose");
-          temp.id = doc.get("id");
-          dataArray2.push(temp);
+            console.log(doc.get("department") +", "+ userDepartment);
+            if(curt<=stt && doc.get("department") == userDepartment){
+              var temp = new Object();
+              temp.start = doc.get("start");
+              temp.end = doc.get("end");
+              temp.purpose = doc.get("purpose");
+              temp.id = doc.get("id");
+              dataArray2.push(temp);
 
-          data2.contents = dataArray2;
-          // div id=content-placeholder 에 결과 내역을 렌더링한다 
-          $("#content-placeholder2").html(template(data2));
-          //var num = document.getElementById('userNum').textContent*1 + 1;
-          //var max = document.getElementById('maxNum').textContent*1;
-          //document.getElementById('userNum').textContent = num;
-        }
+              data2.contents = dataArray2;
+              // div id=content-placeholder 에 결과 내역을 렌더링한다 
+              $("#content-placeholder2").html(template(data2));
+              //var num = document.getElementById('userNum').textContent*1 + 1;
+              //var max = document.getElementById('maxNum').textContent*1;
+              //document.getElementById('userNum').textContent = num;
+            }
+        });
+    })
+    .catch(function(error) {
+        console.log("Error getting documents: ", error);
     });
-})
-.catch(function(error) {
-    console.log("Error getting documents: ", error);
-});
+}
+
+
 
 var deleteArr = new Array();
 function cancelReserve(){
@@ -580,6 +591,7 @@ function submit(){
       start : startTime,
       end : endTime,
       id : userId,
+      department : userDepartment,
       purpose : purpose
     })
     .then(function(docRef) {
