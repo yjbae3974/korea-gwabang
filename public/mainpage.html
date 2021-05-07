@@ -98,7 +98,7 @@
             <div style="padding: 20px">
                 <img src="img\kable\KUengineering.png" alt="" style="height: 65px; object-fit: contain;">
                 <p class="font-weight-bold mt-3 h4" style="color:  #872434;line-height: 1.5;">
-                  이공계 캠퍼스 애기능 학생회관<br> 과방 이용 신청</p>
+                  이공계 캠퍼스 애기능 학생회관<br> 과방 이용 신청 <span style="font-size: 20px;" id = "departmentName"></span> </p>
                 
                 <ul class="nav nav-tabs mb-3" id="ex1" role="tablist" style="border-bottom: 1px solid #B1B1B1;">
                     <li class="nav-item" role="presentation" style="width: 50%;">
@@ -342,6 +342,21 @@ document.getElementById('startTime').setAttribute("max",getTomorrowDate());
 document.getElementById('endTime').setAttribute("min",getTodayDate());
 document.getElementById('endTime').setAttribute("max",getTomorrowDate());
 
+function getFormattedDate(d){
+  var days = ['일','월','화','수','목','금','토'];
+
+  var date = new Date(d)
+  var yyyy = date.getFullYear()
+  var mm = String(date.getMonth() + 1).padStart(2, '0')
+  var dd = String(date.getDate()).padStart(2, '0')
+  var day = "("+ days[date.getDay()] +")"
+  var hh = String(date.getHours()).padStart(2, '0')
+  var MM = String(date.getMinutes()).padStart(2, '0')
+  
+  var formatted_date = yyyy + "-" + mm + "-" + dd + day + " " + hh + ":" + MM;
+  return formatted_date;
+}
+
 
 var userId;
 var userDepartment;
@@ -358,6 +373,7 @@ firebase.auth().onAuthStateChanged(function(user) {
             //alert(user.displayName+"님 안녕하세요");
             userId = doc.id;
             userDepartment = doc.get("department");
+            document.getElementById('departmentName').innerHTML = '('+userDepartment+')';
             console.log("Document data:", doc.data());
             makeCurrentStateTable();
             makeFutureStateTable();
@@ -377,9 +393,6 @@ firebase.auth().onAuthStateChanged(function(user) {
     }
 });
 
-
-d = new Date("2021-05-08T03:15");
-console.log("test: "+d)
 
 function makeCurrentStateTable(){
     // 템플릿 해석
@@ -402,11 +415,10 @@ function makeCurrentStateTable(){
             var endt = new Date(doc.get("end"));
             var curt = new Date();
 
-            console.log(stt, curt, endt)
             if(stt<= curt && curt<=endt  && doc.get("department") == userDepartment){
               var temp = new Object();
-              temp.start = doc.get("start");
-              temp.end = doc.get("end");
+              temp.start = getFormattedDate(doc.get("start"));
+              temp.end = getFormattedDate(doc.get("end"));
               temp.purpose = doc.get("purpose");
               temp.id = doc.get("id");
               if(flag){
@@ -459,11 +471,11 @@ function makeFutureStateTable(){
             var endt = new Date(doc.get("end"));
             var curt = new Date();
 
-            console.log(doc.get("department") +", "+ userDepartment);
+            //console.log(doc.get("department") +", "+ userDepartment);
             if(curt<=stt && doc.get("department") == userDepartment){
               var temp = new Object();
-              temp.start = doc.get("start");
-              temp.end = doc.get("end");
+              temp.start = getFormattedDate(doc.get("start"));
+              temp.end = getFormattedDate(doc.get("end"));
               temp.purpose = doc.get("purpose");
               temp.id = doc.get("id");
               dataArray2.push(temp);
@@ -488,7 +500,7 @@ var deleteArr = new Array();
 function cancelReserve(){
   if(confirm("팝업창에 뜨는 예약내역 중 삭제하고 싶다면 확인, 아니라면 취소를 눌러주세요. \n계속하시겠습니까?")){
     var db = firebase.firestore();
-    console.log(userId);
+    //console.log(userId);
     var query = db.collection("reservation").where("id","==",userId);
     query.get()
     .then(function(querySnapshot) {
