@@ -98,7 +98,7 @@
             <div style="padding: 20px">
                 <img src="img\kable\KUengineering.png" alt="" style="height: 65px; object-fit: contain;">
                 <p class="font-weight-bold mt-3 h4" style="color:  #872434;line-height: 1.5;">
-                  이공계 캠퍼스 애기능 학생회관<br> 과방 이용 신청</p>
+                  이공계 캠퍼스 애기능 학생회관<br> 과방 이용 신청 <span style="font-size: 20px;" id = "departmentName"></span> </p>
                 
                 <ul class="nav nav-tabs mb-3" id="ex1" role="tablist" style="border-bottom: 1px solid #B1B1B1;">
                     <li class="nav-item" role="presentation" style="width: 50%;">
@@ -317,18 +317,6 @@ function getDate(){
   return today;
 }
 
-function getNextDate(){
-  var today = new Date();
-  var tomorrow = new Date(today)
-  tomorrow.setDate(tomorrow.getDate() + 1)
-  var dd = String(tomorrow.getDate()).padStart(2, '0');
-  var mm = String(tomorrow.getMonth() + 1).padStart(2, '0'); //January is 0!
-  var yyyy = tomorrow.getFullYear();
-
-  tomorrow = yyyy + '/' + mm + '/' + dd +' ';
-  return tomorrow;
-}
-
 function getTodayDate(){
   var date = new Date();
   var year = date.getFullYear();
@@ -336,6 +324,7 @@ function getTodayDate(){
   var day = ("0" + date.getDate()).slice(-2);
   return year + "-" + month + "-" + day+"T00:00";
 }
+
 function getTomorrowDate(){
   var today = new Date();
   var tomorrow = new Date(today)
@@ -347,13 +336,30 @@ function getTomorrowDate(){
   tomorrow = yyyy + '-' + mm + '-' + dd ;
   return tomorrow+'T23:59';
 }
+
 document.getElementById('startTime').setAttribute("min",getTodayDate());
 document.getElementById('startTime').setAttribute("max",getTomorrowDate());
 document.getElementById('endTime').setAttribute("min",getTodayDate());
 document.getElementById('endTime').setAttribute("max",getTomorrowDate());
 
+function getFormattedDate(d){
+  var days = ['일','월','화','수','목','금','토'];
+
+  var date = new Date(d)
+  var yyyy = date.getFullYear()
+  var mm = String(date.getMonth() + 1).padStart(2, '0')
+  var dd = String(date.getDate()).padStart(2, '0')
+  var day = "("+ days[date.getDay()] +")"
+  var hh = String(date.getHours()).padStart(2, '0')
+  var MM = String(date.getMinutes()).padStart(2, '0')
+  
+  var formatted_date = yyyy + "-" + mm + "-" + dd + day + " " + hh + ":" + MM;
+  return formatted_date;
+}
+
 
 var userId;
+var userDepartment;
 //여기가 로그인관련 소스
 firebase.auth().onAuthStateChanged(function(user) {
     if (user) {
@@ -366,7 +372,11 @@ firebase.auth().onAuthStateChanged(function(user) {
         if (doc.exists) {
             //alert(user.displayName+"님 안녕하세요");
             userId = doc.id;
+            userDepartment = doc.get("department");
+            document.getElementById('departmentName').innerHTML = '('+userDepartment+')';
             console.log("Document data:", doc.data());
+            makeCurrentStateTable();
+            makeFutureStateTable();
         } 
         else {
            alert("로그인을 완료해주세요");
@@ -384,108 +394,113 @@ firebase.auth().onAuthStateChanged(function(user) {
 });
 
 
-// 템플릿 해석
-var source   = $("#some-template").html();
-var template = Handlebars.compile(source);
+function makeCurrentStateTable(){
+    // 템플릿 해석
+    var source   = $("#some-template").html();
+    var template = Handlebars.compile(source);
 
-var db = firebase.firestore();
-var data = new Object();
-var dataArray = new Array();
-var flag = true;
+    var db = firebase.firestore();
+    var data = new Object();
+    var dataArray = new Array();
+    var flag = true;
 
-var db = firebase.firestore();
-var query = db.collection("reservation").orderBy("created");
-query.get()
-.then(function(querySnapshot) {
-    querySnapshot.forEach(function(doc) {
-        //console.log(doc.id, " => ", doc.data());
+    var db = firebase.firestore();
+    var query = db.collection("reservation").orderBy("created");
+    query.get()
+    .then(function(querySnapshot) {
+        querySnapshot.forEach(function(doc) {
+            //console.log(doc.id, " => ", doc.data());
 
-        var stt = new Date(doc.get("start"));
-        var endt = new Date(doc.get("end"));
-        var curt = new Date();
+            var stt = new Date(doc.get("start"));
+            var endt = new Date(doc.get("end"));
+            var curt = new Date();
 
-        //alert(stt+" "+curt+" "+endt+" "+flag);
+            if(stt<= curt && curt<=endt  && doc.get("department") == userDepartment){
+              var temp = new Object();
+              temp.start = getFormattedDate(doc.get("start"));
+              temp.end = getFormattedDate(doc.get("end"));
+              temp.purpose = doc.get("purpose");
+              temp.id = doc.get("id");
+              if(flag){
+                temp.flag = "(이용가능)"
+              }
+              else{
+                temp.flag = "(이용불가)"
+              }
+              dataArray.push(temp);
 
-        if(stt<= curt && curt<=endt){
-          var temp = new Object();
-          temp.start = doc.get("start");
-          temp.end = doc.get("end");
-          temp.purpose = doc.get("purpose");
-          temp.id = doc.get("id");
-          if(flag){
-            temp.flag = "(이용가능)"
-          }
-          else{
-            temp.flag = "(이용불가)"
-          }
-          dataArray.push(temp);
+              data.contents = dataArray;
+              // div id=content-placeholder 에 결과 내역을 렌더링한다 
+              $("#content-placeholder").html(template(data));
+              var num = document.getElementById('userNum').textContent*1 + 1;
+              var max = document.getElementById('maxNum').textContent*1;
 
-          data.contents = dataArray;
-          // div id=content-placeholder 에 결과 내역을 렌더링한다 
-          $("#content-placeholder").html(template(data));
-          var num = document.getElementById('userNum').textContent*1 + 1;
-          var max = document.getElementById('maxNum').textContent*1;
+              if(num<=max) document.getElementById('userNum').textContent = num;
 
-          if(num<=max) document.getElementById('userNum').textContent = num;
-
-          if(num>=max){
-            document.getElementById('submitBtn').textContent="현재 시간에는 사용불가";
-            flag = false;
-          }
-        }
+              if(num>=max){
+                document.getElementById('submitBtn').textContent="현재 시간에는 사용불가";
+                flag = false;
+              }
+            }
+        });
+    })
+    .catch(function(error) {
+        console.log("Error getting documents: ", error);
     });
-})
-.catch(function(error) {
-    console.log("Error getting documents: ", error);
-});
+}
 
 
-// 이용예정현황
-// 템플릿 해석
-var source   = $("#some-template").html();
-var template = Handlebars.compile(source);
+function makeFutureStateTable(){
+    // 이용예정현황
+    // 템플릿 해석
+    var source   = $("#some-template").html();
+    var template = Handlebars.compile(source);
 
-var db = firebase.firestore();
-var data2 = new Object();
-var dataArray2 = new Array();
+    var db = firebase.firestore();
+    var data2 = new Object();
+    var dataArray2 = new Array();
 
-var db = firebase.firestore();
-var query = db.collection("reservation").orderBy("created");
-query.get()
-.then(function(querySnapshot) {
-    querySnapshot.forEach(function(doc) {
-        //console.log(doc.id, " => ", doc.data());
+    var db = firebase.firestore();
+    var query = db.collection("reservation").orderBy("created");
+    query.get()
+    .then(function(querySnapshot) {
+        querySnapshot.forEach(function(doc) {
+            //console.log(doc.id, " => ", doc.data());
 
-        var stt = new Date(doc.get("start"));
-        var endt = new Date(doc.get("end"));
-        var curt = new Date();
+            var stt = new Date(doc.get("start"));
+            var endt = new Date(doc.get("end"));
+            var curt = new Date();
 
-        if(curt<=stt){
-          var temp = new Object();
-          temp.start = doc.get("start");
-          temp.end = doc.get("end");
-          temp.purpose = doc.get("purpose");
-          temp.id = doc.get("id");
-          dataArray2.push(temp);
+            //console.log(doc.get("department") +", "+ userDepartment);
+            if(curt<=stt && doc.get("department") == userDepartment){
+              var temp = new Object();
+              temp.start = getFormattedDate(doc.get("start"));
+              temp.end = getFormattedDate(doc.get("end"));
+              temp.purpose = doc.get("purpose");
+              temp.id = doc.get("id");
+              dataArray2.push(temp);
 
-          data2.contents = dataArray2;
-          // div id=content-placeholder 에 결과 내역을 렌더링한다 
-          $("#content-placeholder2").html(template(data2));
-          //var num = document.getElementById('userNum').textContent*1 + 1;
-          //var max = document.getElementById('maxNum').textContent*1;
-          //document.getElementById('userNum').textContent = num;
-        }
+              data2.contents = dataArray2;
+              // div id=content-placeholder 에 결과 내역을 렌더링한다 
+              $("#content-placeholder2").html(template(data2));
+              //var num = document.getElementById('userNum').textContent*1 + 1;
+              //var max = document.getElementById('maxNum').textContent*1;
+              //document.getElementById('userNum').textContent = num;
+            }
+        });
+    })
+    .catch(function(error) {
+        console.log("Error getting documents: ", error);
     });
-})
-.catch(function(error) {
-    console.log("Error getting documents: ", error);
-});
+}
+
+
 
 var deleteArr = new Array();
 function cancelReserve(){
   if(confirm("팝업창에 뜨는 예약내역 중 삭제하고 싶다면 확인, 아니라면 취소를 눌러주세요. \n계속하시겠습니까?")){
     var db = firebase.firestore();
-    console.log(userId);
+    //console.log(userId);
     var query = db.collection("reservation").where("id","==",userId);
     query.get()
     .then(function(querySnapshot) {
@@ -514,12 +529,9 @@ function cancelReserve(){
   }
 }
 
-
-var startTime;
-var endTime;
-
-function validateTime(start, end) {
-    const re = /^([0-1]?[0-9]|2[0-4]):([0-5][0-9])(:[0-5][0-9])?$/;
+/*function validateTime(start, end) {
+    const re = /^\(?([0-9]{4})\)?[-]?([0-1]?[0-9]|2[0-4]):([0-5][0-9])?$/;
+    //2021-05-08T03:15
     //alert(getDate()+start+" "+getDate()+end);
     if(re.test(String(start)) && re.test(String(end))){
         var stt = new Date(getDate() + start).getTime();
@@ -550,6 +562,21 @@ function validateTime(start, end) {
         return true;
     } 
     return false;
+}*/
+
+function validateTime(start, end){
+    var curt = new Date().getTime();
+
+    if(end < curt){
+      alert("종료 시간이 현재 시간보다 빠릅니다.");
+      return false;
+    }
+    if(end < start){
+      alert("종료 시간이 시작 시간보다 빠릅니다.");
+      return false;
+    }
+    alert("시작시간:"+start+" \n종료시간:"+end);
+    return true; 
 }
 
 function submit(){
@@ -568,22 +595,25 @@ function submit(){
     }
   }
 
+  console.log(start)
+  console.log(end)
   if(start=="" || start==null || end=="" || end==null || validateTime(start, end)==false){
-    alert("사용시간을 확인해주세요");
+    alert("사용시간을 확인해주세요.");
   }
   else if(purpose=="" || purpose==null){
-    alert("사용목적을 입력해주세요");
+    alert("사용목적을 입력해주세요.");
   }
   else if(flag){
     db.collection("reservation").add({
       created: firebase.firestore.FieldValue.serverTimestamp() ,
-      start : startTime,
-      end : endTime,
+      start : start,
+      end : end,
       id : userId,
+      department : userDepartment,
       purpose : purpose
     })
     .then(function(docRef) {
-        if(confirm("제출이 완료되었습니다")) {
+        if(confirm("제출이 완료되었습니다.")) {
             window.location.href = "mainpage.html";
         }
     })
