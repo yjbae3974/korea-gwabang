@@ -2,7 +2,7 @@
 <html lang="en">
 
 <head>
-    <title>전기전자공학부 과방 관리</title>
+    <title>애기능 학생회관 과방 관리</title>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
   <meta http-equiv="x-ua-compatible" content="ie=edge">
@@ -109,12 +109,16 @@ td{
                 <p class="h3">admin page</p>
                 <img class="mt-3" src="img\kable\KUee_logo.png" alt="" style="width: 80%; max-width: 400px;">
                 <p class="font-weight-bold mt-3 h4" style="color:  #872434;line-height: 1.5;">
-                  전기전자공학부 애기능 학생회관<br> 과방 이용 신청</p>
+                  이공계 캠퍼스 애기능 학생회관<br> 과방 이용 신청</p>
                   
                 
                     
                         <div class="font-weight-bold" style="">현재 수용인원: <span>{0}</span>명</div>
                         <div class="font-weight-bold" style="">최대 수용인원: <span>4</span>명</div>
+                        <select class="custom-select" name="" id="">
+                          <option value="">전기전자공학부</option>
+                          <option value="">신소재공학부</option>
+                        </select>
                         <!--<table class="mt-3" style="margin-left: -10px;">
                             <tr>
                                 <th>이름</th>
@@ -271,34 +275,34 @@ firebase.initializeApp(firebaseConfig);
 var userId;
 var userEmail;
 
-firebase.auth().onAuthStateChanged(function(user) {
-    if (user) {
-      // User is signed in.
-      //console.log(user)      // 인증 후 어떤 데이터를 받아오는지 확인해보기 위함.
-      var db = firebase.firestore();
-      var flag = true;
-      userEmail = user.email;
-      var docRef = db.collection("user").doc(user.uid);
-      docRef.get().then(function(doc) {
-        if (doc.exists) {
-            alert(user.displayName+"님 안녕하세요");
-            userId = doc.id;
-            console.log("Document data:", doc.data());
-        } 
-        else {
-           alert("로그인을 완료해주세요");
-           window.location.href = "loginpage.html";
-        }
-      }).catch(function(error) {
-          console.log("Error getting document:", error);
-      });
-    } else {
-      // No user is signed in.
-      window.location.href = "loginpage.html";
-      //alert("로그인 X");
-      //console.log(user)      // 인증 후 어떤 데이터를 받아오는지 확인해보기 위함.
-    }
-});
+//firebase.auth().onAuthStateChanged(function(user) {
+//    if (user) {
+//      // User is signed in.
+//      //console.log(user)      // 인증 후 어떤 데이터를 받아오는지 확인해보기 위함.
+//      var db = firebase.firestore();
+//      var flag = true;
+//      userEmail = user.email;
+//      var docRef = db.collection("user").doc(user.uid);
+//      docRef.get().then(function(doc) {
+//        if (doc.exists) {
+//            alert(user.displayName+"님 안녕하세요");
+//            userId = doc.id;
+//            console.log("Document data:", doc.data());
+//        } 
+//        else {
+//           alert("로그인을 완료해주세요");
+//           window.location.href = "loginpage.html";
+//        }
+//      }).catch(function(error) {
+//          console.log("Error getting document:", error);
+//      });
+//    } else {
+//      // No user is signed in.
+//      window.location.href = "loginpage.html";
+//      //alert("로그인 X");
+//      //console.log(user)      // 인증 후 어떤 데이터를 받아오는지 확인해보기 위함.
+//    }
+//});
 
 // 템플릿 해석
 var source   = $("#some-template").html();
