@@ -509,29 +509,30 @@ function cancelReserve(){
             var stt = new Date(doc.get("start"));
             var endt = new Date(doc.get("end"));
             var curt = new Date();
-
             if(curt<=endt){
-              if(confirm("시작시간: "+doc.get("start")+"\n종료시간: "+doc.get("end")+"\n사유: "+doc.get("purpose"))){
+              if(confirm("시작시간: "+doc.get("start")+"\n종료시간: "+doc.get("end")+"\n사유: "+doc.get("purpose")+" 를 삭제하시겠습니까?")){
                 deleteArr.push(doc.id);
                 db.collection("reservation").doc(doc.id).delete().then(() => {
-                    alert("삭제되었습니다. 새로고침을 눌러주세요");
+                   
                 }).catch((error) => {
-                    alert("Error removing document: ", error);
+                   alert("Error removing document: ", error);
                 });
               }
             }
         });
+        alert("삭제가 완료되었습니다. 새로고침해주세요"); 
     })
     .catch(function(error) {
         console.log("Error getting documents: ", error);
-    }); 
+    });
   }
+  //location.reload();
 }
 
 
 function validateTime(start, end){
     var curt = new Date().getTime();
-
+    
     if(end < curt){
       alert("종료 시간이 현재 시간보다 빠릅니다.");
       return false;
@@ -548,8 +549,8 @@ function submit(){
   
   var start = document.getElementById('startTime').value;
   var end = document.getElementById('endTime').value;
-  var purpose = document.getElementById('usingPurpose').value
-
+  var purpose = document.getElementById('usingPurpose').value;
+  
   var underMax = true;
   var max = document.getElementById('maxNum').textContent*1;
   if(document.getElementById('userNum').textContent*1>=max){
@@ -572,7 +573,7 @@ function submit(){
       endVal = new Date(end);
       if(confirm("시작시간: "+startVal+"\n종료시간: "+endVal+"\n사유: "+purpose)){
         db.collection("reservation").add({
-            created: firebase.firestore.FieldValue.serverTimestamp() ,
+            created: firebase.firestore.FieldValue.serverTimestamp(),
             start : start,
             end : end,
             id : userId,
@@ -580,7 +581,11 @@ function submit(){
             purpose : purpose
         })
         .then(function(docRef) {
-           alert("제출이 완료되었습니다. 새로고침을 눌러주세요");
+            alert("제출이 완료되었습니다.");
+            //document.getElementById('startTime').value = "";
+            //document.getElementById('endTime').value = "";
+            //document.getElementById('usingPurpose').value = "";
+            location.reload();
         })
         .catch(function(error) {
             console.error("Error adding document: ", error);
@@ -593,10 +598,10 @@ function logout(){
   firebase.auth().signOut().then(function() {
       alert("로그아웃 성공");
       window.location.href = "loginpage.html";
-    // Sign-out successful.
+      // Sign-out successful.
     }).catch(function(error) {
       alert("에러");
-    // An error happened.
+      // An error happened.
     });
 }
 
