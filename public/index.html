@@ -2,7 +2,7 @@
 <html lang="en">
 
 <head>
-    <title>전기전자공학부 과방 관리</title>
+    <title>애기능 학생회관 과방 관리</title>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
   <meta http-equiv="x-ua-compatible" content="ie=edge">
@@ -53,8 +53,8 @@
       <div class="container">
         <a class="navbar-brand" href="#" target="">
           <img
-          src="img\kable\kable-favicon.jpg"
-          height="50"
+          src="img\kable\kuE.png"
+          height="40"
           alt=""
           loading="lazy"
           width=""
@@ -90,9 +90,9 @@
           <!--Grid column-->
           <div class=" col-xl-4 col-lg-6 col-md-10 col-sm-12 col-xs-12 mb-4">
             <div style="padding: 20px">
-                <img src="img\kable\KUee_logo.png" alt="" style="width: 80%;">
+                <img src="img\kable\KUengineering.png" alt="" style="height: 65px; object-fit: contain;">
                 <p class="font-weight-bold mt-3 h4" style="color:  #872434;line-height: 1.5;">
-                  전기전자공학부 애기능 학생회관 과방 이용 신청</p>
+                  이공계 캠퍼스 애기능 학생회관 과방 이용 신청</p>
                 
                   <div class="form-group text-left font-weight-bold mt-5">
                     <label for="email">이메일</label>
@@ -101,10 +101,10 @@
                     
                 <div class="form-group text-left font-weight-bold">
                     <label for="pwd">비밀번호</label>
-                    <input type="password" class="form-control" id="userPassword" placeholder="비밀번호">
+                    <input type="password" class="form-control" id="userPassword" placeholder="비밀번호" autocomplete="off">
                 </div>
-
-                    <a type="button" class="btn btn-block text-white font-weight-bold mt-3" 
+               
+                    <a class="btn btn-block text-white font-weight-bold mt-3" 
                     style="
                     background-color: #872434;
                     border-radius: 1rem;
@@ -112,7 +112,7 @@
                     text-transform: capitalize;
                     " onclick="pwLogin();">로그인</a>
                     
-                    <a type="button" class="btn btn-block font-weight-bold mt-3" 
+                    <a class="btn btn-block font-weight-bold mt-3" 
                     style="
                     border: 2px solid #872434;
                     color: #872434;
@@ -149,7 +149,7 @@
   border-top: 1px solid grey;
   ">
     <div style="height: 10px;"></div>
-    <p class="mb-3" style="color: #333333;">Copyright © 2021 k-able</p>
+    <p class="mb-3" style="color: #333333;">Copyright © 2021 ENTER</p>
     <p style="color: #333333;">이메일: brianbae6@korea.ac.kr</p>
     <div style="height: 3px;"></div>
   </footer>
@@ -207,7 +207,7 @@ firebase.auth().onAuthStateChanged(function(user) {
       var docRef = db.collection("user").doc(user.uid);
       docRef.get().then(function(doc) {
         if (doc.exists) {
-            console.log("Document data:", doc.data()); 
+            //console.log("Document data:", doc.data()); 
             window.location.href = "mainpage.html";
         } 
         else {
