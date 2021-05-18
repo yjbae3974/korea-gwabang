@@ -101,20 +101,16 @@
                     
                 <div class="form-group text-left font-weight-bold">
                     <label for="pwd">비밀번호</label>
-                    <input type="password" class="form-control" id="userPassword" placeholder="비밀번호" onchange="checkPassword();" autocomplete="off">
+                    <input type="password" class="form-control" id="userPassword" placeholder="비밀번호" autocomplete="off">
                 </div>
                
-                
-                
-                
-                
                     <a class="btn btn-block text-white font-weight-bold mt-3" 
                     style="
                     background-color: #872434;
                     border-radius: 1rem;
                     font-size: 20px;
                     text-transform: capitalize;
-                    " onclick="signUp();">로그인</a>
+                    " onclick="pwLogin();">로그인</a>
                     
                     <a class="btn btn-block font-weight-bold mt-3" 
                     style="
@@ -211,7 +207,7 @@ firebase.auth().onAuthStateChanged(function(user) {
       var docRef = db.collection("user").doc(user.uid);
       docRef.get().then(function(doc) {
         if (doc.exists) {
-            console.log("Document data:", doc.data()); 
+            //console.log("Document data:", doc.data()); 
             window.location.href = "mainpage.html";
         } 
         else {
@@ -232,7 +228,7 @@ function pwLogin(){
   var password = document.getElementById('userPassword').value;
   firebase.auth().signInWithEmailAndPassword(email, password)
   .then((user) => {
-    alert("로그인 성공");
+    //alert("로그인 성공");
     window.location.href = "mainpage.html";
     // Signed in
     // ...
