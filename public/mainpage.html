@@ -358,8 +358,8 @@ function getFormattedDate(d){
 }
 
 
-var userId;
-var userDepartment;
+let userId;
+let userDepartment;
 //여기가 로그인관련 소스
 firebase.auth().onAuthStateChanged(function(user) {
     if (user) {
