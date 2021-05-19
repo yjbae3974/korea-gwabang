@@ -53,6 +53,9 @@ td{
     display: flex;
     height: 8rem;
     overflow-wrap: anywhere;
+    padding-left: 3px;
+    padding-right: 5px;
+    word-break: break-all;
 }
   </style>
   
@@ -401,7 +404,8 @@ function getAdminData(departmentSnapshots){
                 temp.timestamp = timestamp;
                 temp.name = doc2.get("name");
                 temp.contact = doc2.get("contact");
-                temp.email = doc2.get("email").split('@')[0];
+                //temp.email = doc2.get("email").split('@')[0];
+                temp.email = doc2.get("email");
                 temp.id = doc2.get("id");
                 temp.start = getFormattedDate(start); 
                 temp.end = getFormattedDate(end);
