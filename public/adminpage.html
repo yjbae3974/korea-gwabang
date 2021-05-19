@@ -111,14 +111,28 @@ td{
                 <p class="font-weight-bold mt-3 h4" style="color:  #872434;line-height: 1.5;">
                   이공계 캠퍼스 애기능 학생회관<br> 과방 이용 신청</p>
                   
-                
-                    
-                        <div class="font-weight-bold" style="">현재 수용인원: <span>{0}</span>명</div>
-                        <div class="font-weight-bold" style="">최대 수용인원: <span>4</span>명</div>
-                        <select class="custom-select" name="" id="">
-                          <option value="">전기전자공학부</option>
-                          <option value="">신소재공학부</option>
+                        <div class="font-weight-bold" style="">현재 수용인원: <span id="userNum">0</span>명</div>
+                        <div class="font-weight-bold" style="">최대 수용인원: <span id="maxNum">4</span>명</div>
+                        <br><br>
+                        <select class="custom-select" name="" id="userDepartment">
+                          <option value="전기전자공학부">전기전자공학부</option>
+                          <option value="신소재공학부">신소재공학부</option>
                         </select>
+                        <select class="custom-select" name="" id="sortingOption">
+                          <option value="timestamp">신청시간순</option>
+                          <option value="startTime">사용시작시간순</option>
+                        </select>
+                        <br>
+                        <div class="container d-flex justify-content-end">
+                            <a type="button" class="btn  font-weight-bold mt-3" 
+                            style="
+                            border: 2px solid #872434;
+                            color: #872434;
+                            border-radius: 1rem;
+                            font-size: 16px;
+                            " onclick="adminSearch()">검색</a>
+                        </div>
+                        <br>
                         <!--<table class="mt-3" style="margin-left: -10px;">
                             <tr>
                                 <th>이름</th>
@@ -162,7 +176,7 @@ td{
                               <div class="text-center list-title">이용사유</div>
                             </div>
                         </div>
-
+                        
                         <!--Content start-->
                         <div id="content-placeholder" class="mb-5"></div>
                         <!--Content end-->
@@ -269,81 +283,172 @@ var firebaseConfig = {
     measurementId: "G-QNC7XQHCLB"
   };
   
+function getFormattedDate(d){
+  var days = ['일','월','화','수','목','금','토'];
+
+  var date = new Date(d)
+  var yyyy = date.getFullYear()
+  var mm = String(date.getMonth() + 1).padStart(2, '0')
+  var dd = String(date.getDate()).padStart(2, '0')
+  var day = "("+ days[date.getDay()] +")"
+  var hh = String(date.getHours()).padStart(2, '0')
+  var MM = String(date.getMinutes()).padStart(2, '0')
+  
+  var formatted_date = yyyy + "-" + mm + "-" + dd + day + " " + hh + ":" + MM;
+  return formatted_date;
+}
+
 // Initialize Firebase
 firebase.initializeApp(firebaseConfig);
 
-var userId;
-var userEmail;
+let userId;
+let userDepartment;
+firebase.auth().onAuthStateChanged(function(user) {
+    if (user) {
+      // User is signed in.
+      //console.log(user)		// 인증 후 어떤 데이터를 받아오는지 확인해보기 위함.
+      var db = firebase.firestore();
+      var docRef = db.collection("user").doc(user.uid);
+      docRef.get().then(function(doc) {
+        if (doc.exists) {
+            //alert(user.displayName+"님 안녕하세요");
+            userId = doc.id;
+            userDepartment = doc.get("department");
+            //console.log("Document data:", doc.data());
+            adminSearch();
+        } 
+        else {
+           alert("로그인을 완료해주세요");
+           window.location.href = "loginpage.html";
+        }
+      }).catch(function(error) {
+          console.log("Error getting document:", error);
+      });
+    } else {
+      // No user is signed in.
+      //alert("로그인 X");
+      window.location.href = "loginpage.html";
+      //console.log(user)		// 인증 후 어떤 데이터를 받아오는지 확인해보기 위함.
+    }
+});
 
-//firebase.auth().onAuthStateChanged(function(user) {
-//    if (user) {
-//      // User is signed in.
-//      //console.log(user)      // 인증 후 어떤 데이터를 받아오는지 확인해보기 위함.
-//      var db = firebase.firestore();
-//      var flag = true;
-//      userEmail = user.email;
-//      var docRef = db.collection("user").doc(user.uid);
-//      docRef.get().then(function(doc) {
-//        if (doc.exists) {
-//            alert(user.displayName+"님 안녕하세요");
-//            userId = doc.id;
-//            console.log("Document data:", doc.data());
-//        } 
-//        else {
-//           alert("로그인을 완료해주세요");
-//           window.location.href = "loginpage.html";
-//        }
-//      }).catch(function(error) {
-//          console.log("Error getting document:", error);
-//      });
-//    } else {
-//      // No user is signed in.
-//      window.location.href = "loginpage.html";
-//      //alert("로그인 X");
-//      //console.log(user)      // 인증 후 어떤 데이터를 받아오는지 확인해보기 위함.
-//    }
-//});
+function adminSearch(){
+  num = 0;
+  getAdminData(getDepartmentSnapshot());
+}
 
 // 템플릿 해석
+
+var db = firebase.firestore();
+let num = 0;
+let max = 4;
 var source   = $("#some-template").html();
 var template = Handlebars.compile(source);
 
-var db = firebase.firestore();
-var data = new Object();
-var dataArray = new Array();
+function getDepartmentSnapshot(){
+  let ref, snapshot; 
+  // 데이터 불러오기
+  var db = firebase.firestore();
+  var selectOption = document.getElementById("userDepartment");
+  var userDepartment = selectOption.options[selectOption.selectedIndex].value; 
 
-var db = firebase.firestore();
-db.collection("reservation").get().then(function(querySnapshot) {
-    querySnapshot.forEach(function(doc) {
-        console.log(doc.id, " => ", doc.data());
-        var id = doc.get("id");
-        var start = doc.get("start");
-        var end = doc.get("end");
-        var purpose = doc.get("purpose");
+  ref = db.collection("reservation").where("department", "==", userDepartment); 
+  snapshot = ref.get();
 
-        db.collection("user").doc(id).get().then(function(doc1) {
-            console.log(doc1.id, " => ", doc1.data());
-            var temp = new Object();
-            temp.name = doc1.get("name");
-            temp.contact = doc1.get("contact");
-            temp.email = doc1.get("email");
-            temp.id = doc1.get("id");
-            temp.start = start;
-            temp.end = end;
-            temp.purpose = purpose;
-            dataArray.push(temp);
+  if (snapshot.empty) { // 검색된 데이터가 없는 경우
+      console.log(`Fail to load ${userDepartment} data.`);
+      return;
+  }
+  console.log(`Success to load ${userDepartment} data.`);
+  return snapshot;
+}
 
-            data.contents = dataArray;
-            // div id=content-placeholder 에 결과 내역을 렌더링한다 
-            $("#content-placeholder").html(template(data));
-        }).catch(function(error) {
-            console.log("Error getting document:", error);
-        });
+function getUserSnapshot(userId){
+  let ref, snapshot; 
+  // 데이터 불러오기
+  var db = firebase.firestore();
+
+  ref = db.collection("user").where("__name__", "==", userId); 
+  snapshot = ref.get();
+
+  if (snapshot.empty) { // 검색된 데이터가 없는 경우
+      console.log(`Fail to load ${userId} data.`);
+      return;
+  }
+  //console.log(`Success to load ${userId} data.`);
+  return snapshot;
+}
+
+function getAdminData(departmentSnapshots){
+  const dataArray = new Array();
+
+  departmentSnapshots.then((snapshot) => {
+      snapshot.forEach((doc) => {
+          var id = doc.get("id");
+          var start = new Date(doc.get("start"));
+          var end = new Date(doc.get("end"));            
+          var purpose = doc.get("purpose");
+          var timestamp = doc.get("created")
+          var curt = new Date();
+          if(start<= curt && curt<=end){
+            num = num + 1;
+          }
+
+          userSnapshot = getUserSnapshot(id);
+          userSnapshot.then((snapshot2) => {
+            snapshot2.forEach((doc2) => {
+                var temp = new Object();
+                temp.timestamp = timestamp;
+                temp.name = doc2.get("name");
+                temp.contact = doc2.get("contact");
+                temp.email = doc2.get("email");
+                temp.id = doc2.get("id");
+                temp.start = getFormattedDate(start); 
+                temp.end = getFormattedDate(end);
+                temp.compStart = start;
+                temp.compEnd = end;
+                temp.purpose = purpose;
+                dataArray.push(temp);
+
+                makeAdminTable(dataArray);
+          });
+      }).catch(function(error) {
+          console.log("Error getting document:", error);
+      });
     });
-})
-.catch(function(error) {
-    console.log("Error getting documents: ", error);
-});
+    console.log(dataArray);
+  });
+}
+
+function makeAdminTable(dataArray){
+  //console.log(dataArray, num);
+  document.getElementById('userNum').textContent = num;
+  document.getElementById('maxNum').textContent = max;
+
+  const data = new Object();
+
+  var selectOption = document.getElementById("sortingOption");
+  var sorting = selectOption.options[selectOption.selectedIndex].value;
+
+  if(sorting == "timestamp"){
+      dataArray.sort(compAddTime);      
+  }
+  else{
+      dataArray.sort(compStartTime);
+  }
+  
+  data.contents = dataArray;
+  $("#content-placeholder").html(template(data));
+}
+
+function compAddTime(a,b){
+  return b.timestamp - a.timestamp;
+}
+
+function compStartTime(a,b){
+  return b.compStart - a.compStart;
+}
+
 
 function logout(){
   firebase.auth().signOut().then(function() {
