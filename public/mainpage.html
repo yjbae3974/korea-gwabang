@@ -45,14 +45,23 @@
       }
 
   </style>
-  
 </head>
+
+<!-- Global site tag (gtag.js) - Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-QNC7XQHCLB"></script>
+<script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+
+    gtag('config', 'G-QNC7XQHCLB');
+</script>
 
 <header class="text-center">
    
 </header>
 
-<body">
+<body>
     <!-- Navbar -->
     
     <nav class="navbar fixed-top bg-white navbar-expand-lg navbar-light white scrolling-navbar">
@@ -164,10 +173,10 @@
                         <div class="mt-3">
                           <div class="row" style="font-size: 14px;">
                               <div class="col-4 list-setting">
-                                  <div class="text-center list-title">이용예정시각</div>
+                                  <div class="text-center list-title">이용 예정 시간</div>
                                 </div>
                                 <div class="col-4 list-setting">
-                                  <div class="text-center list-title">이용시간</div>
+                                  <div class="text-center list-title">이용 종료 시간</div>
                                 </div>
                                 <div class="col-4 list-setting">
                                   <div class="text-center list-title">사유</div>
@@ -248,6 +257,7 @@
   <!--/.Footer-->
 
   <!-- SCRIPTS -->
+
   <!-- JQuery -->
   <script type="text/javascript" src="js/jquery-3.4.1.min.js"></script>
   <!-- Bootstrap tooltips -->
@@ -377,6 +387,8 @@ firebase.auth().onAuthStateChanged(function(user) {
             //console.log("Document data:", doc.data());
             makeCurrentStateTable();
             makeFutureStateTable();
+            firebase.analytics().setCurrentScreen(window.location.pathname) // sets `screen_name` parameter
+            firebase.analytics().logEvent('screen_view') // log event with `screen_name` parameter attached
         } 
         else {
            alert("로그인을 완료해주세요");

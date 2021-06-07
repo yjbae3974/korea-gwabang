@@ -42,6 +42,16 @@
   
 </head>
 
+<!-- Global site tag (gtag.js) - Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-QNC7XQHCLB"></script>
+<script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+
+    gtag('config', 'G-QNC7XQHCLB');
+</script>
+
 <header class="text-center">
    
 </header>
@@ -196,6 +206,8 @@ var firebaseConfig = {
 
 // Initialize Firebase
 firebase.initializeApp(firebaseConfig);
+firebase.analytics().setCurrentScreen(window.location.pathname) // sets `screen_name` parameter
+firebase.analytics().logEvent('screen_view') // log event with `screen_name` parameter attached
 
 firebase.auth().onAuthStateChanged(function(user) {
     if (user) {
