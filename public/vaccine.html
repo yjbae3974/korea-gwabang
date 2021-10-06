@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <title>애기능 학생회관 과방 관리</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  <!-- Font Awesome -->
+  <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.11.2/css/all.css">
+  <!-- Bootstrap core CSS -->
+  <link href="css/bootstrap.min.css" rel="stylesheet">
+  <!-- Material Design Bootstrap -->
+  <link href="css/mdb.min.css" rel="stylesheet">
+  <!-- Your custom styles (optional) -->
+
+  <link rel="stylesheet" href="css/vaccine.css">
+  <link rel="stylesheet" href="app.css">
+  <script src="https://kit.fontawesome.com/22de0a02bc.js" crossorigin="anonymous"></script>
+  <link rel="shortcut icon" href="img\kable\eeTiger.jpg" type="image/x-icon">
+  <style>
+       @media (min-width: 1500px) {
+  .container {
+    max-width: 1440px;
+    
+  }
+  .form-control::placeholder { /* Chrome, Firefox, Opera, Safari 10.1+ */
+            color: #B1B1B1;
+            opacity: 1; /* Firefox */
+}
+
+.form-control:-ms-input-placeholder { /* Internet Explorer 10-11 */
+            color: #B1B1B1;
+}
+
+.form-control::-ms-input-placeholder { /* Microsoft Edge */
+            color: #B1B1B1;
+ }
+}
+.custom-checkbox .custom-control-input:checked ~ .custom-control-label::before {
+  background-color: #8B0029!important;
+}
+
+.custom-checkbox .custom-control-input:checked:focus ~ .custom-control-label::before {
+  box-shadow: 0 0 0 1px #fff, 0 0 0 0.2rem #8B0029
+}
+.custom-checkbox .custom-control-input:focus ~ .custom-control-label::before {
+  box-shadow: 0 0 0 1px #fff, 0 0 0 0.2rem #aaa
+}
+.custom-checkbox .custom-control-input:active ~ .custom-control-label::before {
+  background-color: #fb86a9; 
+}
+  </style>
+  
+</head>
+
+<!-- Global site tag (gtag.js) - Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-QNC7XQHCLB"></script>
+<script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+
+    gtag('config', 'G-QNC7XQHCLB');
+</script>
+
+
+<header class="text-center">
+   
+</header>
+
+<body>
+     <!-- Navbar -->
+    
+     <nav class="navbar fixed-top bg-white navbar-expand-lg navbar-light white scrolling-navbar">
+      <div class="container">
+        <a class="navbar-brand" href="#" target="">
+          <img
+          src="img\kable\kuE.png"
+          height="40"
+          alt=""
+          loading="lazy"
+          width=""
+        />
+        </a>
+      
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#main_nav">
+            <span class="navbar-toggler-icon"></span>
+          </button>
+          <div class="collapse navbar-collapse" id="main_nav">
+        
+        
+            <a class="nav-link font-weight-bold dropdown-item"
+            role="button" aria-expanded="false" href="rules.html">이용안내</a>
+         
+      
+          </div> <!-- navbar-collapse.// -->
+      </div>
+      
+     </nav>
+  <!-- Navbar -->   
+
+  <!--Main layout-->
+  <main class="mt-4 pt-4" style="min-height: 100vh; align-items: center;background-color: #D8CCBE;">
+    <div class="container card-form">
+        <div id="before-accept">
+            <div class="vaccine-title mb-3">백신 접종 기록 안내</div>
+            <div class="checkbox-content" style="word-break:keep-all;">
+                애기능 학생회관의 원활한 이용을 위해 학우 여러분들의 코로나-19 백신 접종 여부를 조사하고자 합니다.<br><br>
+                조사에 동의하신다면, 아래 체크박스를 눌러 다음으로 진행해주시기 바랍니다.
+            </div>
+            <div class="myTest custom-control custom-checkbox mt-5">
+                <input type="checkbox" class="custom-control-input" id="약관동의">
+                <label class="custom-control-label checkbox-content" for="약관동의">상기 내용을 확인하였으며, 이에 동의합니다</label>
+              </div>
+              <div class="checkbox-content mt-3" style="color: #8B0029;text-align: end;cursor: pointer;" onclick="
+                if(checkIfBoxChecked('약관동의')===true){
+                    setFormActive = 1;
+                }
+                else{
+                    alert('약관에 동의해주세요');
+                }
+                띄우기();
+              ">다음-></div>
+        </div>
+        <div id="after-accept">
+            sdfsdfsdfsdf
+        </div>
+    </div>
+    
+        
+  </main>
+  <!--Main layout-->
+
+  <!--Footer-->
+  <footer class="page-footer text-center font-small" style="
+  text-align: center;
+  background-color: white;
+  border-top: 1px solid grey;
+  ">
+    <div style="height: 10px;"></div>
+    <p class="mb-3" style="color: #333333;">Copyright © 2021 ENTER</p>
+    <p style="color: #333333;">이메일: brianbae6@korea.ac.kr</p>
+    <div style="height: 3px;"></div>
+  </footer>
+  <!--/.Footer-->
+  <script>
+    
+    let before = document.getElementById("before-accept");
+    let after = document.getElementById("after-accept");
+    let setFormActive = false;
+    function checkIfBoxChecked(id){
+        let component  = document.getElementById(id);
+        let result = component.checked;
+        return result;
+    }
+    function 띄우기(){
+        if(setFormActive === false){
+            before.style.display="block";
+            after.style.display="none";
+        }
+        else{
+            before.style.display="none";
+            after.style.display="block";
+        }
+    }
+    window.onload=(event) =>{
+        console.log(before);
+        console.log(after);
+       띄우기();
+    }
+</script>
+  <!-- SCRIPTS -->
+  <!-- JQuery -->
+  <script type="text/javascript" src="js/jquery-3.4.1.min.js"></script>
+  <!-- Bootstrap tooltips -->
+  <script type="text/javascript" src="js/popper.min.js"></script>
+  <!-- Bootstrap core JavaScript -->
+  <script type="text/javascript" src="js/bootstrap.min.js"></script>
+  <!-- MDB core JavaScript -->
+  <script type="text/javascript" src="js/mdb.min.js"></script>
+  <!-- Initializations -->
+  <script type="text/javascript">
+  
+    // Animations initialization
+    new WOW().init();
+
+  </script>
+
+
+
+</body>
+
+</html>
