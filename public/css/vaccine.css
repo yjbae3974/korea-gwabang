@@ -1,12 +1,14 @@
 .card-form{
     background-color: #fff;
-    min-height: 80vh;
     width: calc(100% - 40px);
     margin-top: 40px;
     border-radius: 8px;
     box-shadow: rgba(0, 0, 0, 0.15) 1.95px 1.95px 2.6px;
   }
   #before-accept{
+    padding: 30px;
+  }
+  #after-accept{
     padding: 30px;
   }
   .vaccine-title{
@@ -16,4 +18,24 @@
     color: #808080;
     font-size: clamp(12px, 2vw, 16px);
     line-height: clamp(24px, 4vw, 24px);
+  }
+  .form-question{
+    font-weight: 700;
+    font-size: clamp(12px,2vw,16px);
+  }
+  .form-check-label{
+    font-size: clamp(12px,2vw,16px);
+    color: #808080;
+  }
+  div{
+    word-break: keep-all;
+  }
+  .d-flex.mt-1{
+    gap: 10px;
+    margin-bottom: 10px;
+  }
+  .btn-제출{
+    background-color: #872434;
+    padding: 10px 20px;
+    border-radius: 2rem;
   }
