@@ -1,3 +1,5 @@
+![Screenshot_20210320-174253_One UI Home](https://github.com/user-attachments/assets/ddd887b8-278d-4ea3-9833-ce4a7857d1e7)
+
 # 고려대학교 전기전자공학부 과방 사용 예약 서비스
 
 ## 개요
@@ -14,10 +16,9 @@
 
 ## 스크린샷
 - ![Screenshot_20210319-191715_Chrome](https://github.com/user-attachments/assets/8f9425c5-fe47-4c68-9602-5fcc39bbf9a8)
-- ![Screenshot_20210320-174253_One UI Home](https://github.com/user-attachments/assets/ddd887b8-278d-4ea3-9833-ce4a7857d1e7)
 
 ## 사용 방법
-코리아 과방 앱을 사용하는 방법:
+고려대학교 전기전자공학부 과방 사용 예약 서비스를 사용하는 방법:
 1. 호스팅된 웹 페이지를 방문하세요 (현재는 기간만료로 호스팅 종료).
 2. 홈페이지에 표시된 현재 이용 현황을 확인하세요.
 3. 슬롯을 예약하려면 예약 섹션으로 이동하여 방문에 대한 세부 정보를 입력하고 제출하세요.
