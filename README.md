@@ -1,4 +1,4 @@
-![Screenshot_20210320-174253_One UI Home](https://github.com/user-attachments/assets/ddd887b8-278d-4ea3-9833-ce4a7857d1e7)
+<img src="https://github.com/user-attachments/assets/ddd887b8-278d-4ea3-9833-ce4a7857d1e7" width="200px" height="auto">
 
 # 고려대학교 전기전자공학부 과방 사용 예약 서비스
 
@@ -15,7 +15,7 @@
 - **Bootstrap**: 응용 프로그램 인터페이스를 설계하는 데 사용되는 반응형 프레임워크를 제공하여 다양한 장치에서 접근성을 보장합니다.
 
 ## 스크린샷
-- ![Screenshot_20210319-191715_Chrome](https://github.com/user-attachments/assets/8f9425c5-fe47-4c68-9602-5fcc39bbf9a8)
+- <img src="https://github.com/user-attachments/assets/8f9425c5-fe47-4c68-9602-5fcc39bbf9a8" width="300px" height="auto">
 
 ## 사용 방법
 고려대학교 전기전자공학부 과방 사용 예약 서비스를 사용하는 방법:
